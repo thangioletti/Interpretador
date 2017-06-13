@@ -1,0 +1,42 @@
+===========================
+Django 1.11.3 release notes
+===========================
+
+*Under development*
+
+Django 1.11.3 fixes several bugs in 1.11.2.
+
+Bugfixes
+========
+
+* Removed an incorrect deprecation warning about a missing ``renderer``
+  argument if a ``Widget.render()`` method accepts ``**kwargs``
+  (:ticket:`28265`).
+
+* Fixed a regression causing ``Model.__init__()`` to crash if a field has an
+  instance only descriptor (:ticket:`28269`).
+
+* Fixed an incorrect ``DisallowedModelAdminLookup`` exception when using
+  a nested reverse relation in ``list_filter`` (:ticket:`28262`).
+
+* Fixed admin's ``FieldListFilter.get_queryset()`` crash on invalid input
+  (:ticket:`28202`).
+
+* Fixed invalid HTML for a required ``AdminFileWidget`` (:ticket:`28278`).
+
+* Fixed model initialization to set the name of class-based model indexes
+  for models that only inherit ``models.Model`` (:ticket:`28282`).
+
+* Fixed crash in admin's inlines when a model has an inherited non-editable
+  primary key (:ticket:`27967`).
+
+* Fixed ``QuerySet.union()``, ``intersection()``, and ``difference()`` when
+  combining with an ``EmptyQuerySet`` (:ticket:`28293`).
+
+* Prevented ``Paginator``’s unordered object list warning from evaluating a
+  ``QuerySet`` (:ticket:`28284`).
+
+* Fixed the value of ``redirect_field_name`` in ``LoginView``’s template
+  context. It's now an empty string (as it is for the original function-based
+  ``login()`` view) if the corresponding parameter isn't sent in a request (in
+  particular, when the login page is accessed directly) (:ticket:`28229`).
