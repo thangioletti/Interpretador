@@ -1,0 +1,18 @@
+PROGRAM Exemplo
+	FUNCTION funcaoExemplo
+		VAR iIdade;
+		iIdade = 18;
+ 
+		IF (iIdade >= 18) 
+			FOR (VAR iX = 0; iX < 10; iX = iX + 1)
+				PRINT("Mensagem teste");
+			END;	
+		ELSE
+			VAR iX = 0;
+			WHILE(iX < 10) 
+				PRINT("Mensagem teste");
+				iX = iX + 1;
+			END;
+        END;
+	END;
+END;

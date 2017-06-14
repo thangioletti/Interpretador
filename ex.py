@@ -86,33 +86,25 @@ lexer = lex.lex()
 #To use the lexer, you first need to feed it some input text using its input() method. After that, repeated calls to token() produce tokens. The following code shows how this works:
 
 # Test it out
-data = '''
- PROGRAM Exemplo
-	FUNCTION funcaoExemplo
-		VAR iIdade;
-		iIdade = 18;
- 
-		IF (iIdade >= 18) 
-			FOR (VAR iX = 0; iX < 10; iX = iX + 1)
-				PRINT("Mensagem teste");
-			END;	
-		ELSE
-			VAR iX = 0;
-			WHILE(iX < 10) 
-				PRINT("Mensagem teste");
-				iX = iX + 1;
-			END;
-        END;
-	END;
-  END;
-'''
+sCaminhoImg = 'run.top'
+oArquivo = open(sCaminhoImg)
 
+sData = ''
+with oArquivo as oInfo:
+    for sLine in oInfo.readlines():
+        sData = sData+sLine
+
+oArquivo.close()
 # Give the lexer some input
-lexer.input(data)
+lexer.input(sData)
+
+oArquivo = open('tokens.ttop', 'w')
 
 # Tokenize
 while True:
     tok = lexer.token()
     if not tok: 
         break      # No more input
-    print(tok)
+    oArquivo.write(str(tok)+'\n')
+
+oArquivo.close()
