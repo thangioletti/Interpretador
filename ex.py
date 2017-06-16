@@ -112,6 +112,41 @@ while True:
     tok = lexer.token()
     if not tok: 
         break      # No more input
+
     oArquivo.write(str(tok)+'\n')
 
 oArquivo.close()
+
+import yacc as yacc
+
+def p_expreg_soma(p):
+    'expreg : expreg SOMA term'
+    p[0] = p[1] + p[3]
+
+def p_expreg_subtracao(p):
+    'expreg : expreg SUBTRACAO term'
+    p[0] = p[1] - p[3]
+
+def p_expreg_term(p):
+    'expreg : term'
+    p[0] = p[1]
+
+def p_term_num(p):
+    'term : NUM'
+    p[0] = p[1]
+
+def p_error(p):
+    print("Syntax error in input!")
+
+parser = yacc.yacc()
+
+# Test it out
+sCaminhoImg = 'run.top'
+oArquivo = open(sCaminhoImg)
+
+sData = ''
+with oArquivo as oInfo:
+    for sLine in oInfo.readlines():
+        if not sLine:
+            continue
+        print(parser.parse(sLine))
