@@ -9,12 +9,13 @@ reserved = {
    'WHILE' : 'WHILE',
    'FUNCTION' : 'FUNCTION',
    'ELSE' : 'ELSE',   
-   'PROGRAM': 'PROGRAM'
-   'INTEIRO'
+   'PROGRAM': 'PROGRAM'      
 }
 
 tokens = [
-    'ID',
+    'COMANDO',
+    'STRING',
+    'ID',    
     'NUM',
     'DECIMAL',
     'SOMA',
@@ -33,7 +34,7 @@ tokens = [
     'DIFERENTE',
     'ATRIBUICAO',
     'VIRGULA',
-    'ASPAS'
+    'ASPAS'    
 
 ] + list(reserved.values())
 
@@ -56,9 +57,17 @@ t_ATRIBUICAO  = r'\='
 t_VIRGULA     = r'\,'
 t_ASPAS       = r'\"'
 
+def t_COMANDO(t):
+    r'[A-Z_]+'
+    t.type = reserved.get(t.value,'COMANDO')    # Check for reserved words
+    return t
+
+def t_STRING(t):
+    r'"[a-zA-Z_0-9]*"'        
+    return t
+
 def t_ID(t):
-    r'[a-zA-Z_][a-zA-Z_0-9]*'
-    t.type = reserved.get(t.value,'ID')    # Check for reserved words
+    r'[i|s|b|f|d|c|o][a-zA-Z_][a-zA-Z_0-9]*'                    
     return t
 
 # A regular expression rule with some action code
@@ -82,8 +91,6 @@ def t_error(t):
 
 # Build the lexer
 lexer = lex.lex()
-
-#To use the lexer, you first need to feed it some input text using its input() method. After that, repeated calls to token() produce tokens. The following code shows how this works:
 
 # Test it out
 sCaminhoImg = 'run.top'
