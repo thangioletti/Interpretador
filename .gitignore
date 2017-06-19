@@ -1,1 +1,4 @@
-tokens.ttop
+*.ttop
+parser.out
+parsetab.py
+__pycache__/*
