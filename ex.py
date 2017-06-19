@@ -121,19 +121,19 @@ import yacc as yacc
 
 def p_expreg_soma(p):
     'expreg : expreg SOMA term'
-    p[0] = p[1] + p[3]
+    #p[0] = p[1] + p[3]
 
 def p_expreg_subtracao(p):
     'expreg : expreg SUBTRACAO term'
-    p[0] = p[1] - p[3]
+    #p[0] = p[1] - p[3]
 
 def p_expreg_term(p):
     'expreg : term'
-    p[0] = p[1]
+    #p[0] = p[1]
 
 def p_term_num(p):
     'term : NUM'
-    p[0] = p[1]
+    #p[0] = p[1]
 
 def p_error(p):
     print("Syntax error in input!")
