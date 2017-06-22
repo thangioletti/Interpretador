@@ -118,10 +118,21 @@ while True:
 oArquivo.close()
 
 import yacc as yacc
+import classes as classes
+import classes.pilha as Pilha
+import classes.factor as Factor
+import classes.term as Term
+import classes.expression as Expression
+
+lista = list()
+pilha = Pilha.Pilha()
 
 def p_expreg_soma(p):
     'expreg : expreg SOMA term'
-    #p[0] = p[1] + p[3]
+    objeto1 = pilha.desempilha()
+    objeto2 = pilha.desempilha()
+    pilha.empilha(Expression.Expression(objeto2, "+", objeto1))
+   #p[0] = Expression(p[1], "+", p[3])
 
 def p_expreg_subtracao(p):
     'expreg : expreg SUBTRACAO term'
@@ -129,11 +140,19 @@ def p_expreg_subtracao(p):
 
 def p_expreg_term(p):
     'expreg : term'
-    #p[0] = p[1]
+    objeto = pilha.desempilha()
+    pilha.empilha(Expression.Expression(None,None,objeto))
+    #p[0] = Expression(None, None, p[1]) 
 
-def p_term_num(p):
-    'term : NUM'
-    #p[0] = p[1]
+def p_term_factor(p):
+    'term : factor'
+    objeto = pilha.desempilha()
+    pilha.empilha(Term.Term(None, None, objeto))
+
+def p_factor_num(p):
+    'factor : NUM'
+    pilha.empilha(Factor.Factor(None, p[1], None))
+    #p[0] = Term(None, None, Factor(None, p[1], None))
 
 def p_error(p):
     print("Syntax error in input!")
@@ -149,4 +168,7 @@ with oArquivo as oInfo:
     for sLine in oInfo.readlines():
         if not sLine:
             continue
-        print(parser.parse(sLine))
+        parser.parse(sLine)
+
+while not pilha.vazia():
+    print(pilha.desempilha())
