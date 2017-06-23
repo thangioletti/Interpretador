@@ -14,7 +14,7 @@ class Term():
             aux += self.term.__repr__()
 
         if self.operacao:
-            aux += self.operacao
+            aux += "<OPERACAO>\n" + self.operacao + "\n</OPERACAO>\n"
 
         if self.factor:
              aux += self.factor.__repr__()
