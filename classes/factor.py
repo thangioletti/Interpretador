@@ -12,11 +12,11 @@ class Factor:
 
         if (self.expression):
              aux += "( \n"
-             aux += self.expression
+             aux += self.expression.__repr__()
              aux += ") \n"
         
         if self.id:
-            aux += self.id
+            aux += self.id.__repr__()
         elif self.number:
             aux += str(self.number) + "\n"
         

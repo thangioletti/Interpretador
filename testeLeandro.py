@@ -50,10 +50,8 @@ t_POTENCIA    = r'\^'
 t_MAIOR       = r'\>'
 t_MENOR       = r'\<'
 t_IGUAL       = r'\=='
-t_MAIORIGUAL  = r'\>='
-t_MENORIGUAL  = r'\<='
 t_DIFERENTE   = r'\!='
-t_ATRIBUICAO  = r'\='
+t_ATRIBUICAO  = r'\:='
 t_VIRGULA     = r'\,'
 t_ASPAS       = r'\"'
 
@@ -120,31 +118,66 @@ while True:
 import yacc as yacc
 import classes as classes
 import classes.pilha as Pilha
+import classes.id as Id
 import classes.factor as Factor
 import classes.term as Term
-import classes.expression as Expression
+import classes.expreg as Expreg
+import classes.explog as Explog
+import classes.atribuicao as Atribuicao
 
-lista = list()
 pilha = Pilha.Pilha()
+
+def p_declaracao(p):
+    'declaracao : VAR ID PONTOEVIRGULA'
+    
+
+def p_atribuicao_expreg(p):
+    'atribuicao : ID ATRIBUICAO expreg PONTOEVIRGULA'
+    objetoExpreg = pilha.desempilha()
+    pilha.empilha(Atribuicao.Atribuicao(Id.Id(p[1]),objetoExpreg))
+
+def p_explog_diferente_expreg(p):
+    'explog : expreg DIFERENTE expreg'
+    objetoExpreg1 = pilha.desempilha()
+    objetoExpreg2 = pilha.desempilha()
+    pilha.empilha(Explog.Explog(objetoExpreg2, "!=", objetoExpreg1))
+
+def p_explog_igual_expreg(p):
+    'explog : expreg IGUAL expreg'
+    objetoExpreg1 = pilha.desempilha()
+    objetoExpreg2 = pilha.desempilha()
+    pilha.empilha(Explog.Explog(objetoExpreg2, "==", objetoExpreg1))
+
+def p_explog_menor_expreg(p):
+    'explog : expreg MENOR expreg'
+    objetoExpreg1 = pilha.desempilha()
+    objetoExpreg2 = pilha.desempilha()
+    pilha.empilha(Explog.Explog(objetoExpreg2, "<", objetoExpreg1))
+
+def p_explog_maior_expreg(p):
+    'explog : expreg MAIOR expreg'
+    objetoExpreg1 = pilha.desempilha()
+    objetoExpreg2 = pilha.desempilha()
+    pilha.empilha(Explog.Explog(objetoExpreg2, ">", objetoExpreg1))
 
 def p_expreg_soma(p):
     'expreg : expreg SOMA term'
-    objeto1 = pilha.desempilha()
-    objeto2 = pilha.desempilha()
-    pilha.empilha(Expression.Expression(objeto2, "+", objeto1))
+    objetoTerm = pilha.desempilha()
+    objetoExpreg = pilha.desempilha()
+    pilha.empilha(Expreg.Expreg(objetoExpreg, "+", objetoTerm))
    #p[0] = Expression(p[1], "+", p[3])
 
 def p_expreg_subtracao(p):
     'expreg : expreg SUBTRACAO term'
-    objeto1 = pilha.desempilha()
-    objeto2 = pilha.desempilha()
-    pilha.empilha(Expression.Expression(objeto2, "-", objeto1))
+    objetoTerm = pilha.desempilha()
+    objetoExpreg = pilha.desempilha()
+    pilha.empilha(Expreg.Expreg(objetoExpreg, "-", objetoTerm))
     #p[0] = p[1] - p[3]
 
 def p_expreg_term(p):
     'expreg : term'
     objeto = pilha.desempilha()
-    pilha.empilha(Expression.Expression(None,None,objeto))
+    pilha.empilha(Expreg.Expreg(None,None,objeto))
     #p[0] = Expression(None, None, p[1]) 
 
 def p_term_multiplicacao(p):
@@ -163,6 +196,16 @@ def p_term_factor(p):
     'term : factor'
     objeto = pilha.desempilha()
     pilha.empilha(Term.Term(None, None, objeto))
+
+def p_factor_expreg(p):
+    'factor : LPAREN expreg RPAREN'
+    objetoExpreg = pilha.desempilha()
+    pilha.empilha(Factor.Factor(None, None, objetoExpreg))
+
+def p_factor_id(p):
+    'factor : ID'
+    print("ID -> FACTOR")
+    pilha.empilha(Factor.Factor(Id.Id(p[1]), None, None))
 
 def p_factor_num(p):
     'factor : NUM'

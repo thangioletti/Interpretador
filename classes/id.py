@@ -9,7 +9,7 @@ class Id:
         if self.value:
             aux += self.value + "\n"
         
-        aux = "</ID> \n"
+        aux += "</ID> \n"
         return aux
     
     def __repr__(self):
