@@ -13,5 +13,11 @@ class Pilha(object):
         if not self.vazia():
             return self.dados.pop(-1)
 
+    def getDados(self):   
+        return self.dados
+
+    def tamanho(self):
+        return len(self.dados)
+
     def vazia(self):
         return len(self.dados) == 0
