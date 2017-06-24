@@ -9,7 +9,9 @@ reserved = {
    'WHILE' : 'WHILE',
    'FUNCTION' : 'FUNCTION',
    'ELSE' : 'ELSE',   
-   'PROGRAM': 'PROGRAM'      
+   'PROGRAM': 'PROGRAM',
+   'TRUE' : 'TRUE',
+   'FALSE' : 'FALSE'      
 }
 
 tokens = [
@@ -146,6 +148,11 @@ def p_condicao(p):
     objetoExplog = pilha.desempilha()
     pilha.empilha(Condicao.Condicao(objetoExplog, None))
 
+def p_atribuicao_explog(p):
+    'atribuicao : ID ATRIBUICAO explog PONTOEVIRGULA'
+    objetoExplog = pilha.desempilha()
+    pilha.empilha(Atribuicao.Atribuicao(Id.Id(p[1]),objetoExplog, None))
+
 def p_atribuicao_expreg(p):
     'atribuicao : ID ATRIBUICAO expreg PONTOEVIRGULA'
     objetoExpreg = pilha.desempilha()
@@ -178,6 +185,14 @@ def p_explog_maior_expreg(p):
     objetoExpreg1 = pilha.desempilha()
     objetoExpreg2 = pilha.desempilha()
     pilha.empilha(Explog.Explog(objetoExpreg2, ">", objetoExpreg1))
+
+def p_explog_true(p):
+    'explog : TRUE'
+    pilha.empilha(Explog.Explog(None,None,None,p[1]))
+
+def p_explog_false(p):
+    'explog : FALSE'
+    pilha.empilha(Explog.Explog(None,None,None,p[1]))
 
 def p_expreg_soma(p):
     'expreg : expreg SOMA term'
