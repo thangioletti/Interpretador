@@ -14,7 +14,7 @@ class Expreg:
             aux += self.expreg.__repr__()
 
         if self.operacao:
-            aux += "<OPERACAO>\n" + self.operacao + "\n</OPERACAO>\n"
+            aux += self.operacao + "\n"
 
         if self.term:
              aux += self.term.__repr__()

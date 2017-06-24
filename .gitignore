@@ -5,3 +5,4 @@ __pycache__/*
 .vscode/*
 testeLeandro.py
 runTesteLeandro.top
+classes/__pycache__/*

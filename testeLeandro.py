@@ -20,7 +20,7 @@ tokens = [
     'DECIMAL',
     'SOMA',
     'SUBTRACAO',
-    'MULTIPLICAO',
+    'MULTIPLICACAO',
     'DIVISAO',
     'LPAREN',
     'RPAREN',        
@@ -41,7 +41,7 @@ tokens = [
 # Regular expression rules for simple tokens
 t_SOMA        = r'\+'
 t_SUBTRACAO   = r'-'
-t_MULTIPLICAO = r'\*'
+t_MULTIPLICACAO = r'\*'
 t_DIVISAO     = r'/'
 t_LPAREN      = r'\('
 t_RPAREN      = r'\)'
@@ -91,7 +91,7 @@ def t_error(t):
 lexer = lex.lex()
 
 # Test it out
-sCaminhoImg = 'run.top'
+sCaminhoImg = 'runTesteLeandro.top'
 oArquivo = open(sCaminhoImg)
 
 sData = ''
@@ -103,7 +103,7 @@ oArquivo.close()
 # Give the lexer some input
 lexer.input(sData)
 
-#oArquivo = open('tokens.ttop', 'w')
+oArquivo = open('tokensLeandro.ttop', 'w')
 
 # Tokenize
 while True:
@@ -111,9 +111,9 @@ while True:
     if not tok: 
         break      # No more input
 
-    #oArquivo.write(str(tok)+'\n')
+    oArquivo.write(str(tok)+'\n')
 
-#oArquivo.close()
+oArquivo.close()
 
 import yacc as yacc
 import classes as classes
@@ -124,17 +124,36 @@ import classes.term as Term
 import classes.expreg as Expreg
 import classes.explog as Explog
 import classes.atribuicao as Atribuicao
+import classes.declaracao as Declaracao
+import classes.condicao as Condicao
 
 pilha = Pilha.Pilha()
 
-def p_declaracao(p):
-    'declaracao : VAR ID PONTOEVIRGULA'
-    
+def p_comando_declaracao(p):
+    'comando : declaracao'
+
+def p_comando_explog(p):
+    'comando : explog'
+
+def p_comando_atribuicao(p):
+    'comando : atribuicao'
+
+def p_comando_condicao(p):
+    'comando : condicao'
+
+def p_condicao(p):
+    'condicao : IF LPAREN explog RPAREN'
+    objetoExplog = pilha.desempilha()
+    pilha.empilha(Condicao.Condicao(objetoExplog, None))
 
 def p_atribuicao_expreg(p):
     'atribuicao : ID ATRIBUICAO expreg PONTOEVIRGULA'
     objetoExpreg = pilha.desempilha()
-    pilha.empilha(Atribuicao.Atribuicao(Id.Id(p[1]),objetoExpreg))
+    pilha.empilha(Atribuicao.Atribuicao(Id.Id(p[1]),objetoExpreg, None))
+
+def p_atribuicao_string(p):
+    'atribuicao : ID ATRIBUICAO STRING PONTOEVIRGULA'
+    pilha.empilha(Atribuicao.Atribuicao(Id.Id(p[1]),None, p[3]))
 
 def p_explog_diferente_expreg(p):
     'explog : expreg DIFERENTE expreg'
@@ -181,7 +200,7 @@ def p_expreg_term(p):
     #p[0] = Expression(None, None, p[1]) 
 
 def p_term_multiplicacao(p):
-    'term : term MULTIPLICAO factor'
+    'term : term MULTIPLICACAO factor'
     objetoFactor = pilha.desempilha()
     objetoTerm = pilha.desempilha()
     pilha.empilha(Term.Term(objetoTerm, "*", objetoFactor))
@@ -204,13 +223,17 @@ def p_factor_expreg(p):
 
 def p_factor_id(p):
     'factor : ID'
-    print("ID -> FACTOR")
     pilha.empilha(Factor.Factor(Id.Id(p[1]), None, None))
 
 def p_factor_num(p):
     'factor : NUM'
     pilha.empilha(Factor.Factor(None, p[1], None))
     #p[0] = Term(None, None, Factor(None, p[1], None))
+
+def p_declaracao(p):
+    'declaracao : VAR ID PONTOEVIRGULA'
+    pilha.empilha(Declaracao.Declaracao(Id.Id(p[2])))
+
 
 def p_error(p):
     print("Syntax error in input!")
@@ -221,7 +244,6 @@ parser = yacc.yacc()
 sCaminhoImg = 'runTesteLeandro.top'
 oArquivo = open(sCaminhoImg)
 
-sData = ''
 with oArquivo as oInfo:
     for sLine in oInfo.readlines():
         if not sLine:

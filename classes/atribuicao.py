@@ -1,9 +1,10 @@
  
 class Atribuicao:
 
-    def __init__(self, id=None, expreg=None):
+    def __init__(self, id=None, expreg=None, string=None):
         self.expreg = expreg
-        self.id = id        
+        self.id = id
+        self.string = string
 
     def __str__(self):
         aux = "<ATRIBUICAO> \n"
@@ -15,7 +16,10 @@ class Atribuicao:
 
         if self.expreg:
             aux += self.expreg.__repr__()
-        
+        elif self.string:
+            aux += self.string + "\n"
+
+
         aux += "; \n"
         aux += "</ATRIBUICAO> \n"
         return aux
