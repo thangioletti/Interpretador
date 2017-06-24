@@ -25,3 +25,6 @@ class Term():
 
     def __repr__(self):
         return self.__str__()
+
+    def getFactor(self):
+        return self.factor

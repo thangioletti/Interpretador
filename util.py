@@ -6,6 +6,9 @@ class Util:
 	def getTokenFileContent(self):		
 		return self.getFileContent('tokens.ttop')
 
+	def getSintaticFileContent(self):		
+		return self.getFileContent('sintatico.stop')		
+
 	def getFileContent(self, sFileDir):
 
 		oArquivo = open(sFileDir)

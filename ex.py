@@ -217,6 +217,10 @@ class Compiler:
 
         def p_factor_id(p):
             'factor : ID'
+<<<<<<< HEAD
+            #print("ID -> FACTOR")
+=======
+>>>>>>> c81b935104c84479eb1ff43c234947b41d297dcd
             pilha.empilha(Factor.Factor(Id.Id(p[1]), None, None))
 
         def p_factor_num(p):
@@ -233,14 +237,21 @@ class Compiler:
 
         parser = yacc.yacc()
 
-        # Test it out
-        sCaminhoImg = 'run.top'
-        oArquivo = open(sCaminhoImg)
-
-        sData = ''
-        with oArquivo as oInfo:
-            for sLine in oInfo.readlines():
-                if not sLine:
-                    continue
-                parser.parse(sLine)
+        # Test it out    
+        aData = sData.split('\n')        
+        for sLine in aData:
+            if not sLine:
+                continue
+            parser.parse(sLine)
         
+        oArquivo = open('sintatico.stop', 'w')        
+        for sImprime in pilha.getDados():
+            oArquivo.write(str(sImprime))
+        
+        oArquivo.close()
+
+        print(pilha.vazia())
+
+        while not pilha.vazia():            
+            oObjetoAnalise = pilha.desempilha()        
+            oObjetoAnalise.semantico()

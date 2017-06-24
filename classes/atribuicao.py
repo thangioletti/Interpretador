@@ -1,4 +1,4 @@
-
+ 
 class Atribuicao:
 
     def __init__(self, id=None, expreg=None, string=None):
@@ -26,3 +26,7 @@ class Atribuicao:
 
     def __repr__(self):
         return self.__str__()
+
+    def semantico(self):          
+        if (not isinstance(self.expreg.getValue() , self.id.getType())):
+            print('a variavel espera um valor %s mas o recebido foi %s' % (str(self.id.getType()), str(type(self.expreg.getValue()))));
