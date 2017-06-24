@@ -14,7 +14,7 @@ class Explog:
             aux += self.expreg1.__repr__()
 
         if self.comparacao:
-            aux += "<COMPARACAO>\n" + self.comparacao + "\n</COMPARACAO>\n"
+            aux += self.comparacao + "\n"
 
         if self.expreg2:
              aux += self.expreg2.__repr__()
