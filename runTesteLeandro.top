@@ -1,1 +1,4 @@
-sVar := TRUE;
+FUNCTION fTeste(VAR sTexto, VAR iValor) 
+    PRINT("Qualquercoisa");
+    iValor := 10;
+END
