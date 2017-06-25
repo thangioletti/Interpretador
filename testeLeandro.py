@@ -37,7 +37,6 @@ tokens = [
     'DIFERENTE',
     'ATRIBUICAO',
     'VIRGULA'
-
 ] + list(reserved.values())
 
 # Regular expression rules for simple tokens
