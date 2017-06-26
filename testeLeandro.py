@@ -16,7 +16,7 @@ reserved = {
 }
 
 tokens = [
-    'COMANDO',
+    #'COMANDO',
     'STRING',
     'ID',    
     'NUM',
@@ -32,8 +32,6 @@ tokens = [
     'MAIOR',
     'MENOR',
     'IGUAL',
-    'MAIORIGUAL',
-    'MENORIGUAL',
     'DIFERENTE',
     'ATRIBUICAO',
     'VIRGULA'
@@ -132,17 +130,18 @@ import classes.bloco as Bloco
 import classes.function as Function
 import classes.parametro as Parametro
 import classes.parametros as Parametros
+import classes.repeticao as Repeticao
 
 pilha = Pilha.Pilha()
 
 def p_function(p):
-    'function : FUNCTION ID LPAREN parametros RPAREN bloco'
+    'function : FUNCTION ID LPAREN parametros RPAREN bloco END'
     objetoBloco = pilha.desempilha()
     objetoParametros = pilha.desempilha()
     pilha.empilha(Function.Function(objetoParametros, objetoBloco))
 
 def p_bloco(p):
-    'bloco : comando END'
+    'bloco : comando'
     objetoComando = pilha.desempilha()
     pilha.empilha(Bloco.Bloco(objetoComando))
 
@@ -177,10 +176,37 @@ def p_comando_escrever(p):
     objetoEscrever = pilha.desempilha()
     pilha.empilha(Comando.Comando(objetoEscrever))
 
-def p_condicao(p):
-    'condicao : IF LPAREN explog RPAREN'
+def p_comando_repeticao(p):
+    'comando : repeticao'
+    objetoRepeticao = pilha.desempilha()
+    pilha.empilha(Comando.Comando(objetoRepeticao))
+
+def p_repeticao_for(p):
+    'repeticao : FOR LPAREN VAR ID ATRIBUICAO expreg PONTOEVIRGULA explog PONTOEVIRGULA ID ATRIBUICAO expreg RPAREN bloco END'
+    objetoBloco = pilha.desempilha()
+    objetoExpreg2 = pilha.desempilha()
     objetoExplog = pilha.desempilha()
-    pilha.empilha(Condicao.Condicao(objetoExplog, None))
+    objetoExpreg1 = pilha.desempilha()
+    pilha.empilha(Repeticao.Repeticao(objetoBloco, objetoExplog, Id.Id(p[4]), objetoExpreg1, Id.Id(p[10]), objetoExpreg2))
+
+def p_repeticao_while(p):
+    'repeticao : WHILE LPAREN explog RPAREN bloco END'
+    objetoBloco = pilha.desempilha()
+    objetoExplog = pilha.desempilha()
+    pilha.empilha(Repeticao.Repeticao(objetoBloco, objetoExplog))
+
+def p_condicao_else(p):
+    'condicao : IF LPAREN explog RPAREN bloco ELSE bloco END'
+    objetoElse = pilha.desempilha()
+    objetoBloco = pilha.desempilha()
+    objetoExplog = pilha.desempilha()
+    pilha.empilha(Condicao.Condicao(objetoExplog, objetoBloco, objetoElse))
+
+def p_condicao(p):
+    'condicao : IF LPAREN explog RPAREN bloco END'
+    objetoBloco = pilha.desempilha()
+    objetoExplog = pilha.desempilha()
+    pilha.empilha(Condicao.Condicao(objetoExplog, objetoBloco))
 
 def p_atribuicao_explog(p):
     'atribuicao : ID ATRIBUICAO explog PONTOEVIRGULA'
