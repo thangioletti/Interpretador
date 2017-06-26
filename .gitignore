@@ -3,6 +3,4 @@ parser.out
 parsetab.py
 __pycache__/*
 .vscode/*
-testeLeandro.py
-runTesteLeandro.top
 classes/__pycache__/*
