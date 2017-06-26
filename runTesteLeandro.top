@@ -1,5 +1,10 @@
-FUNCTION fTeste(VAR iInt)
-    FOR (VAR iX := 1;iX < 2; iX := iX + 1)
+PROGRAM pProgram    
+    FUNCTION fTeste(VAR iInt)
         PRINT("IF");
+    END
+    FUNCTION fTeste2(VAR iKibe)
+        WHILE(iKibe > 2)
+            PRINT("Kibe");
+        END
     END
 END

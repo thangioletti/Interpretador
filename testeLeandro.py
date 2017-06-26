@@ -63,7 +63,7 @@ def t_STRING(t):
     return t
 
 def t_ID(t):
-    r'[i|s|b|f|d|c|o][a-zA-Z_][a-zA-Z_0-9]*'                    
+    r'[i|s|b|f|d|c|o|p][a-zA-Z_][a-zA-Z_0-9]*'                    
     return t
 
 # A regular expression rule with some action code
@@ -131,8 +131,20 @@ import classes.function as Function
 import classes.parametro as Parametro
 import classes.parametros as Parametros
 import classes.repeticao as Repeticao
+import classes.program as Program
 
 pilha = Pilha.Pilha()
+
+def p_program(p):
+    'program : PROGRAM ID function END'
+    objetoFunction = pilha.desempilha()
+    pilha.empilha(Program.Program(objetoFunction))
+
+def p_function_function(p):
+    'function : function function'
+    objetoFunction1 = pilha.desempilha()
+    objetoFunction2 = pilha.desempilha()
+    pilha.empilha(Function.Function(objetoFunction2, objetoFunction1))
 
 def p_function(p):
     'function : FUNCTION ID LPAREN parametros RPAREN bloco END'
