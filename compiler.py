@@ -2,23 +2,25 @@ import lex as lex
 
 class Compiler:
     def __init__(self, sData=None):
+        import lex as lex
+
         # List of token names.   This is always required
         reserved = {
-            'VAR' : 'VAR',
-            'PRINT': 'PRINT',
-            'IF' : 'IF',
-            'FOR' : 'FOR',      
-            'WHILE' : 'WHILE',
-            'FUNCTION' : 'FUNCTION',
-            'ELSE' : 'ELSE',   
-            'PROGRAM': 'PROGRAM',
-            'TRUE' : 'TRUE',
-            'FALSE' : 'FALSE',
-            'END' : 'END'    
+           'VAR' : 'VAR',
+           'PRINT': 'PRINT',
+           'IF' : 'IF',
+           'FOR' : 'FOR',      
+           'WHILE' : 'WHILE',
+           'FUNCTION' : 'FUNCTION',
+           'ELSE' : 'ELSE',   
+           'PROGRAM': 'PROGRAM',
+           'TRUE' : 'TRUE',
+           'FALSE' : 'FALSE',
+           'END' : 'END'    
         }
 
         tokens = [
-            'COMANDO',
+            #'COMANDO',
             'STRING',
             'ID',    
             'NUM',
@@ -34,8 +36,6 @@ class Compiler:
             'MAIOR',
             'MENOR',
             'IGUAL',
-            'MAIORIGUAL',
-            'MENORIGUAL',
             'DIFERENTE',
             'ATRIBUICAO',
             'VIRGULA'
@@ -53,12 +53,9 @@ class Compiler:
         t_MAIOR       = r'\>'
         t_MENOR       = r'\<'
         t_IGUAL       = r'\=='
-        t_MAIORIGUAL  = r'\>='
-        t_MENORIGUAL  = r'\<='
         t_DIFERENTE   = r'\!='
-        t_ATRIBUICAO  = r'\='
+        t_ATRIBUICAO  = r'\:='
         t_VIRGULA     = r'\,'
-        t_ASPAS       = r'\"'
 
         def t_COMANDO(t):
             r'[A-Z_]+'
@@ -70,7 +67,7 @@ class Compiler:
             return t
 
         def t_ID(t):
-            r'[i|s|b|f|d|c|o][a-zA-Z_][a-zA-Z_0-9]*'                    
+            r'[i|s|b|f|d|c|o|p][a-zA-Z_][a-zA-Z_0-9]*'                    
             return t
 
         # A regular expression rule with some action code
@@ -94,7 +91,11 @@ class Compiler:
 
         # Build the lexer
         lexer = lex.lex()
-            
+
+        # Test it out
+        sCaminhoImg = 'runTesteLeandro.top'
+        oArquivo = open(sCaminhoImg)
+
         # Give the lexer some input
         lexer.input(sData)
 
@@ -127,17 +128,30 @@ class Compiler:
         import classes.function as Function
         import classes.parametro as Parametro
         import classes.parametros as Parametros
+        import classes.repeticao as Repeticao
+        import classes.program as Program
 
         pilha = Pilha.Pilha()
 
+        def p_program(p):
+            'program : PROGRAM ID function END'
+            objetoFunction = pilha.desempilha()
+            pilha.empilha(Program.Program(objetoFunction))
+
+        def p_function_function(p):
+            'function : function function'
+            objetoFunction1 = pilha.desempilha()
+            objetoFunction2 = pilha.desempilha()
+            pilha.empilha(Function.Function(objetoFunction2, objetoFunction1))
+
         def p_function(p):
-            'function : FUNCTION ID LPAREN parametros RPAREN bloco'
+            'function : FUNCTION ID LPAREN parametros RPAREN bloco END'
             objetoBloco = pilha.desempilha()
             objetoParametros = pilha.desempilha()
             pilha.empilha(Function.Function(objetoParametros, objetoBloco))
 
         def p_bloco(p):
-            'bloco : comando END'
+            'bloco : comando'
             objetoComando = pilha.desempilha()
             pilha.empilha(Bloco.Bloco(objetoComando))
 
@@ -172,10 +186,37 @@ class Compiler:
             objetoEscrever = pilha.desempilha()
             pilha.empilha(Comando.Comando(objetoEscrever))
 
-        def p_condicao(p):
-            'condicao : IF LPAREN explog RPAREN'
+        def p_comando_repeticao(p):
+            'comando : repeticao'
+            objetoRepeticao = pilha.desempilha()
+            pilha.empilha(Comando.Comando(objetoRepeticao))
+
+        def p_repeticao_for(p):
+            'repeticao : FOR LPAREN VAR ID ATRIBUICAO expreg PONTOEVIRGULA explog PONTOEVIRGULA ID ATRIBUICAO expreg RPAREN bloco END'
+            objetoBloco = pilha.desempilha()
+            objetoExpreg2 = pilha.desempilha()
             objetoExplog = pilha.desempilha()
-            pilha.empilha(Condicao.Condicao(objetoExplog, None))
+            objetoExpreg1 = pilha.desempilha()
+            pilha.empilha(Repeticao.Repeticao(objetoBloco, objetoExplog, Id.Id(p[4]), objetoExpreg1, Id.Id(p[10]), objetoExpreg2))
+
+        def p_repeticao_while(p):
+            'repeticao : WHILE LPAREN explog RPAREN bloco END'
+            objetoBloco = pilha.desempilha()
+            objetoExplog = pilha.desempilha()
+            pilha.empilha(Repeticao.Repeticao(objetoBloco, objetoExplog))
+
+        def p_condicao_else(p):
+            'condicao : IF LPAREN explog RPAREN bloco ELSE bloco END'
+            objetoElse = pilha.desempilha()
+            objetoBloco = pilha.desempilha()
+            objetoExplog = pilha.desempilha()
+            pilha.empilha(Condicao.Condicao(objetoExplog, objetoBloco, objetoElse))
+
+        def p_condicao(p):
+            'condicao : IF LPAREN explog RPAREN bloco END'
+            objetoBloco = pilha.desempilha()
+            objetoExplog = pilha.desempilha()
+            pilha.empilha(Condicao.Condicao(objetoExplog, objetoBloco))
 
         def p_atribuicao_explog(p):
             'atribuicao : ID ATRIBUICAO explog PONTOEVIRGULA'
@@ -228,7 +269,7 @@ class Compiler:
             objetoTerm = pilha.desempilha()
             objetoExpreg = pilha.desempilha()
             pilha.empilha(Expreg.Expreg(objetoExpreg, "+", objetoTerm))
-        #p[0] = Expression(p[1], "+", p[3])
+           #p[0] = Expression(p[1], "+", p[3])
 
         def p_expreg_subtracao(p):
             'expreg : expreg SUBTRACAO term'
@@ -306,24 +347,23 @@ class Compiler:
 
         parser = yacc.yacc()
 
-        sData = ""
-
-        with oArquivo as oInfo:
-            for sLine in oInfo.readlines():
-                if not sLine:
-                    continue
-                sData += sLine
-
-        parser.parse(sData)
+        # Test it out
+        oArquivo = open('sintatico.stop', 'w')         
         
-        oArquivo = open('sintatico.stop', 'w')        
-        for sImprime in pilha.getDados():
+        parser.parse(sData)
+
+        for sImprime in pilha.getDados():        
             oArquivo.write(str(sImprime))
         
         oArquivo.close()
+        
+        #while not pilha.vazia():
+         #   print(pilha.desempilha())
+        
+        
 
-        print(pilha.vazia())
+        #print(pilha.vazia())
 
-        while not pilha.vazia():            
-            oObjetoAnalise = pilha.desempilha()        
-            oObjetoAnalise.semantico()
+        #while not pilha.vazia():            
+            #oObjetoAnalise = pilha.desempilha()        
+            #oObjetoAnalise.semantico()
