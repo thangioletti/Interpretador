@@ -4,7 +4,7 @@ from compiler import Compiler
 util = Util()
 
 sData = util.getFileContent('runTesteLeandro.top')
-compila = Compiler(sData)
+compiler = Compiler(sData)
 
 #TOKENS
 #print(util.getTokenFileContent())
