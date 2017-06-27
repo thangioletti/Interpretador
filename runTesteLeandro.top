@@ -1,10 +1,5 @@
 PROGRAM pProgram    
     FUNCTION fTeste(VAR iInt)
-        PRINT("IF");
-    END
-    FUNCTION fTeste2(VAR iKibe)
-        WHILE(iKibe > 2)
-            PRINT("Kibe");
-        END
+        iInt := 1 > 2 OR 2 < 3;
     END
 END

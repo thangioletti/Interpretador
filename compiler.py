@@ -16,7 +16,9 @@ class Compiler:
            'PROGRAM': 'PROGRAM',
            'TRUE' : 'TRUE',
            'FALSE' : 'FALSE',
-           'END' : 'END'    
+           'END' : 'END',
+           'AND' : 'AND',
+           'OR' : 'OR'    
         }
 
         tokens = [
@@ -232,6 +234,18 @@ class Compiler:
             'atribuicao : ID ATRIBUICAO STRING PONTOEVIRGULA'
             pilha.empilha(Atribuicao.Atribuicao(Id.Id(p[1]),None, p[3]))
 
+        def p_explog_or(p):
+            'explog : explog OR explog'
+            objetoExplog1 = pilha.desempilha()
+            objetoExplog2 = pilha.desempilha()
+            pilha.empilha(Explog.Explog(objetoExplog2, "OR", objetoExplog1))
+
+        def p_explog_and(p):
+            'explog : explog AND explog'
+            objetoExplog1 = pilha.desempilha()
+            objetoExplog2 = pilha.desempilha()
+            pilha.empilha(Explog.Explog(objetoExplog2, "AND", objetoExplog1))
+
         def p_explog_diferente_expreg(p):
             'explog : expreg DIFERENTE expreg'
             objetoExpreg1 = pilha.desempilha()
@@ -352,17 +366,10 @@ class Compiler:
         
         parser.parse(sData)
 
-        for sImprime in pilha.getDados():        
-            oArquivo.write(str(sImprime))
+        while not pilha.vazia():
+            oArquivo.write(str(pilha.desempilha()))
         
-        oArquivo.close()
-        
-        #while not pilha.vazia():
-         #   print(pilha.desempilha())
-        
-        
-
-        #print(pilha.vazia())
+        oArquivo.close()     
 
         #while not pilha.vazia():            
             #oObjetoAnalise = pilha.desempilha()        
