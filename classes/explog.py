@@ -15,6 +15,7 @@ class Explog:
             aux += self.expreg1.__repr__()
         elif self.explog:
             aux += self.explog + "\n"
+        
         if self.comparacao:
             aux += self.comparacao + "\n"
 
@@ -27,3 +28,23 @@ class Explog:
 
     def __repr__(self):
         return self.__str__()
+
+    def getValue(self):
+        if str(self.comparacao) == ">":
+            return self.expreg1.getValue() > self.expreg2.getValue()
+        elif str(self.comparacao) == "<":
+            return self.expreg1.getValue() < self.expreg2.getValue()
+        elif str(self.comparacao) == "==":
+            return self.expreg1.getValue() == self.expreg2.getValue()
+        elif str(self.comparacao) == "!=":
+            return self.expreg1.getValue() != self.expreg2.getValue() 
+        elif str(self.comparacao) == "AND":
+            return self.expreg1.getValue() and self.expreg2.getValue()    
+        elif str(self.comparacao) == "OR":
+            return self.expreg1.getValue() or self.expreg2.getValue()
+        else:
+            if self.explog == "TRUE":
+                return True
+            else:
+                return False
+              

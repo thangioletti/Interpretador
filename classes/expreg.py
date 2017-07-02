@@ -27,4 +27,11 @@ class Expreg:
         return self.__str__()
 
     def getValue(self):
-        return self.term.getFactor().getNumber()
+        #return self.term.getFactor().getNumber()
+        if self.operacao:
+            if self.operacao == '+':
+                return self.expreg.getValue() + self.term.getValue()
+            else:
+                return self.expreg.getValue() - self.term.getValue()
+        elif self.term:
+            return self.term.getValue()

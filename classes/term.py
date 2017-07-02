@@ -26,5 +26,13 @@ class Term():
     def __repr__(self):
         return self.__str__()
 
-    def getFactor(self):
-        return self.factor
+    #def getFactor(self):
+        #return self.factor
+    def getValue(self):
+        if self.operacao:
+            if self.operacao == '*':
+                return self.term.getValue() * self.factor.getValue()
+            else:
+                return self.term.getValue() / self.factor.getValue()
+        else:
+            return self.factor.getValue()

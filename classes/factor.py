@@ -15,7 +15,7 @@ class Factor:
              aux += self.expression.__repr__()
              aux += ") \n"
         
-        if self.id:
+        elif self.id:
             aux += self.id.__repr__()
         elif self.number:
             aux += str(self.number) + "\n"
@@ -28,3 +28,11 @@ class Factor:
 
     def getNumber(self):
         return self.number
+
+    def getValue(self):
+        if self.expression:
+            return self.expression.getValue()
+        elif self.id:
+            return self.id.getValue()
+        else:
+            return self.number

@@ -1,5 +1,5 @@
 PROGRAM pProgram    
     FUNCTION fTeste(VAR iInt)
-        iInt := 1 > 2 OR 2 < 3;
+        bInt := "teste";
     END
 END

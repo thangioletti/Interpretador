@@ -22,7 +22,7 @@ class Compiler:
         }
 
         tokens = [
-            #'COMANDO',
+            'COMANDO',
             'STRING',
             'ID',    
             'NUM',
@@ -58,18 +58,18 @@ class Compiler:
         t_DIFERENTE   = r'\!='
         t_ATRIBUICAO  = r'\:='
         t_VIRGULA     = r'\,'
-
+    
         def t_COMANDO(t):
             r'[A-Z_]+'
             t.type = reserved.get(t.value,'COMANDO')    # Check for reserved words
             return t
 
         def t_STRING(t):
-            r'"[a-zA-Z_0-9]*"'        
+            r'"[a-zA-Z_0-9]*"'
             return t
 
         def t_ID(t):
-            r'[i|s|b|f|d|c|o|p][a-zA-Z_][a-zA-Z_0-9]*'                    
+            r'[i|s|b|f|d|o|p][a-zA-Z_][a-zA-Z_0-9]*'                    
             return t
 
         # A regular expression rule with some action code
@@ -223,7 +223,7 @@ class Compiler:
         def p_atribuicao_explog(p):
             'atribuicao : ID ATRIBUICAO explog PONTOEVIRGULA'
             objetoExplog = pilha.desempilha()
-            pilha.empilha(Atribuicao.Atribuicao(Id.Id(p[1]),objetoExplog, None))
+            pilha.empilha(Atribuicao.Atribuicao(Id.Id(p[1]),None, None, objetoExplog))
 
         def p_atribuicao_expreg(p):
             'atribuicao : ID ATRIBUICAO expreg PONTOEVIRGULA'
@@ -233,7 +233,7 @@ class Compiler:
         def p_atribuicao_string(p):
             'atribuicao : ID ATRIBUICAO STRING PONTOEVIRGULA'
             pilha.empilha(Atribuicao.Atribuicao(Id.Id(p[1]),None, p[3]))
-
+            
         def p_explog_or(p):
             'explog : explog OR explog'
             objetoExplog1 = pilha.desempilha()
@@ -367,10 +367,8 @@ class Compiler:
         parser.parse(sData)
 
         while not pilha.vazia():
-            oArquivo.write(str(pilha.desempilha()))
-        
-        oArquivo.close()     
-
-        #while not pilha.vazia():            
-            #oObjetoAnalise = pilha.desempilha()        
+            oObjetoAnalise = pilha.desempilha()        
+            oArquivo.write(str(oObjetoAnalise))
             #oObjetoAnalise.semantico()
+        
+        oArquivo.close()
