@@ -132,6 +132,8 @@ class Compiler:
         import classes.parametros as Parametros
         import classes.repeticao as Repeticao
         import classes.program as Program
+        import classes.invocacao as Invocacao
+        import classes.parametroInvocacao as ParametrosInvocacao
 
         pilha = Pilha.Pilha()
 
@@ -162,6 +164,11 @@ class Compiler:
             objetoComando1 = pilha.desempilha()
             objetoComando2 = pilha.desempilha()
             pilha.empilha(Comando.Comando(objetoComando2, objetoComando1))
+
+        def p_comando_invocacao(p):
+            'comando : invocacao'
+            objetoInvocacao = pilha.desempilha()
+            pilha.empilha(Comando.Comando(objetoInvocacao))
 
         def p_comando_declaracao(p):
             'comando : declaracao'
@@ -343,6 +350,28 @@ class Compiler:
         def p_parametro(p):
             'parametro : VAR ID'
             pilha.empilha(Parametro.Parametro(Id.Id(p[2])))
+
+        def p_invocacao_id(p):
+            'invocacao : ID LPAREN ID RPAREN PONTOEVIRGULA'
+            pilha.empilha(Invocacao.Invocacao(p[1], Id.Id(p[3])))
+
+        def p_invocacao_parametrosInvocacao(p):
+            'invocacao : ID LPAREN parametrosInvocacao RPAREN PONTOEVIRGULA'
+            objetoParametrosInvocacao = pilha.desempilha()
+            pilha.empilha(Invocacao.Invocacao(p[1], objetoParametrosInvocacao))    
+
+        def p_invocacao(p):
+            'invocacao : ID LPAREN RPAREN PONTOEVIRGULA'
+            pilha.empilha(Invocacao.Invocacao(p[1]))
+
+        def p_parametros_invocacao(p):
+            'parametrosInvocacao : parametrosInvocacao VIRGULA ID'
+            objetoParametrosInvocacao = pilha.desempilha()
+            pilha.empilha(ParametrosInvocacao.ParametrosInvocacao(objetoParametro, p[3]))
+        
+        def p_parametro_invocacao(p):
+            'parametrosInvocacao : ID VIRGULA ID'
+            pilha.empilha(ParametrosInvocacao.ParametrosInvocacao(Id.Id(p[1]), Id.Id(p[3])))
 
         def p_declaracao(p):
             'declaracao : VAR ID PONTOEVIRGULA'

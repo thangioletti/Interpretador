@@ -10,4 +10,4 @@ compiler = Compiler(sData)
 #print(util.getTokenFileContent())
 
 #SINTATICO
-#print(util.getSintaticFileContent())
+print(util.getSintaticFileContent())
