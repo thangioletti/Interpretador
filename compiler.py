@@ -1,8 +1,13 @@
 import lex as lex
+from util import Util
 
 class Compiler:
     def __init__(self, sData=None):
         import lex as lex
+
+        util = Util()
+        util.unlinkSemantic()
+
 
         # List of token names.   This is always required
         reserved = {
@@ -386,18 +391,18 @@ class Compiler:
             pilha.empilha(Escrever.Escrever(None, p[3]))
 
         def p_error(p):
-            print("Syntax error in input!")
+            print("Syntax error in input! %s" % p)
 
         parser = yacc.yacc()
 
         # Test it out
-        oArquivo = open('sintatico.stop', 'w')         
+        oArquivoSitatico = open('sintatico.stop', 'w')
+        
         
         parser.parse(sData)
 
-        while not pilha.vazia():
-            oObjetoAnalise = pilha.desempilha()        
-            oArquivo.write(str(oObjetoAnalise))
-            #oObjetoAnalise.semantico()
+        while not pilha.vazia():            
+            oObjetoAnalise = pilha.desempilha()                    
+            oArquivoSitatico.write(str(oObjetoAnalise))            
         
-        oArquivo.close()
+        oArquivoSitatico.close()        

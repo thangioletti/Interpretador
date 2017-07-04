@@ -1,6 +1,7 @@
 from util import Util
 from compiler import Compiler
 
+
 util = Util()
 
 sData = util.getFileContent('runTesteLeandro.top')
@@ -10,4 +11,7 @@ compiler = Compiler(sData)
 #print(util.getTokenFileContent())
 
 #SINTATICO
-print(util.getSintaticFileContent())
+#print(util.getSintaticFileContent())
+
+#SEMANTICO
+print(util.getSemanticFileContent())

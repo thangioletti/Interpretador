@@ -1,5 +1,5 @@
-PROGRAM pProgram    
-    FUNCTION fTeste(VAR iInt)
-        fTeste(iInt, sString);
+PROGRAM pProgram       
+    FUNCTION fTeste(VAR iInt)    	
+        bInt := "TESTE";
     END
 END

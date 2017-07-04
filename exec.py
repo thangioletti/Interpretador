@@ -1,6 +1,6 @@
 from tkinter import *
 from util import Util
-from ex import Compiler
+from compiler import Compiler
 
 class Application:
 	util = Util()
@@ -145,7 +145,8 @@ class Application:
 		self.lex.insert(END, self.util.getTokenFileContent())
 		self.sin.delete(1.0, END)
 		self.sin.insert(END, self.util.getSintaticFileContent())
-		
+		self.sem.delete(1.0, END)
+		self.sem.insert(END, self.util.getSemanticFileContent())		
 	   
 root = Tk()
 Application(root)
