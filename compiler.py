@@ -398,7 +398,6 @@ class Compiler:
         # Test it out
         oArquivoSitatico = open('sintatico.stop', 'w')
         
-        
         parser.parse(sData)
 
         while not pilha.vazia():            

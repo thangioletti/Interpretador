@@ -1,4 +1,5 @@
 import os
+import json
 
 class Util:
 	
@@ -21,6 +22,34 @@ class Util:
 			return self.getFileContent('semantico.stop')
 		else:
 			return 'Ok'			
+
+	def getTable(self):
+		if (os.path.isfile('table.ttop')):
+			sJson = self.getFileContent('table.ttop')
+		else:
+			sJson = '{}'
+
+		return json.loads(sJson)			
+
+	def getSimble(self, sKey):
+		try:
+			return self.getTable()[sKey]
+		except Exception as e:
+			return False
+
+	def setTable(self, oObj):
+
+		oJson = self.getTable()	
+		oJson = self.objMerge(oJson, oObj)
+		sJsonSave = json.dumps(oJson)		
+		oArquivo = open('table.ttop', 'w')
+		oArquivo.write(sJsonSave)
+		oArquivo.close()
+
+	def objMerge(self, obj, add_obj):		
+		for property in add_obj:
+			obj[property] = add_obj[property]
+		return obj
 
 	def setSemanticFile(self, sText):
 		oArquivoSemantico = open('semantico.stop', 'w')		

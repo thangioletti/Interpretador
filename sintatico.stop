@@ -9,9 +9,19 @@ iInt
 </PARAMETROS> 
 <BLOCO> 
 <COMANDO> 
-<ATRIBUICAO> 
+<COMANDO> 
+<DECLARACAO> 
+ VAR 
 <ID> 
 bInt
+</ID> 
+; 
+</DECLARACAO> 
+</COMANDO> 
+<COMANDO> 
+<ATRIBUICAO> 
+<ID> 
+iInt
 </ID> 
 := 
 <EXPREG> 
@@ -24,7 +34,7 @@ bInt
 <OPERACAO>
 /
 </OPERACAO>
-<FACTOR> 
+<FACTOR>
 <ID> 
 iVar
 </ID> 
@@ -33,6 +43,7 @@ iVar
 </EXPREG> 
 ; 
 </ATRIBUICAO> 
+</COMANDO> 
 </COMANDO> 
 </BLOCO> 
 </FUNCTION> 

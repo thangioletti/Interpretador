@@ -1,1 +1,5 @@
-iX = 10;
+PROGRAM pProgram       
+    FUNCTION fTeste(VAR iInt)    	
+        bInt := "TESTE";
+    END
+END
