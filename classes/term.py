@@ -1,3 +1,4 @@
+from util import Util
 #operacao = * ou /
 #
 class Term():
@@ -6,6 +7,7 @@ class Term():
         self.term = term
         self.operacao = operacao
         self.factor = factor
+        self.semantico()
     
     def __str__(self):
         aux = "<TERM> \n"
@@ -36,3 +38,13 @@ class Term():
                 return self.term.getValue() / self.factor.getValue()
         else:
             return self.factor.getValue()
+
+    def semantico(self):        
+        util = Util()
+
+        if self.operacao and self.operacao == '/':
+            #Valida se não está tentando fazer uma divisão por zero, porém não tem como validar se for divisão por uma variável
+            if self.factor.getValue() == 0:
+                util.setSemanticFile('<TERM>Não é possível fazer divisão por zero</TERM>')
+
+               

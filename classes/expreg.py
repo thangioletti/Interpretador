@@ -1,3 +1,4 @@
+from util import Util
 # operacao = + ou -
 #
 class Expreg:
