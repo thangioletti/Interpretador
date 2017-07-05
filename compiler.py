@@ -7,7 +7,7 @@ class Compiler:
 
         util = Util()
         util.unlinkSemantic()
-
+        util.unlinkTable()
 
         # List of token names.   This is always required
         reserved = {
@@ -112,8 +112,7 @@ class Compiler:
         while True:
             tok = lexer.token()
             if not tok: 
-                break      # No more input
-
+                break      # No more input            
             oArquivo.write(str(tok)+'\n')
 
         oArquivo.close()
@@ -398,10 +397,11 @@ class Compiler:
         # Test it out
         oArquivoSitatico = open('sintatico.stop', 'w')
         
-        parser.parse(sData)
+        parser.parse(sData)        
 
-        while not pilha.vazia():            
-            oObjetoAnalise = pilha.desempilha()                    
-            oArquivoSitatico.write(str(oObjetoAnalise))            
+        while not pilha.vazia():                        
+                        
+            oObjetoAnalise = pilha.desempilha()                                            
+            oArquivoSitatico.write(str(oObjetoAnalise))                        
         
-        oArquivoSitatico.close()        
+        oArquivoSitatico.close()

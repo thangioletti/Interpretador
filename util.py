@@ -22,6 +22,11 @@ class Util:
 		else:
 			return 'Ok'			
 
+	def unlinkTable(self):	
+		oJson = {}
+		sJsonSave = json.dumps(oJson)		
+		self.saveTableFile(sJsonSave)
+
 	def getTable(self):
 		if (os.path.isfile('table.ttop')):
 			sJson = self.getFileContent('table.ttop')
@@ -31,24 +36,85 @@ class Util:
 		return json.loads(sJson)			
 
 	def getSymbol(self, sKey):
-		try:
-			return self.getTable()[sKey]
-		except Exception as e:
-			return False
+		i = 1
+		oTable = self.getTable()		
+		while (i <= int(self.getCommand())):						
+			try:								
+				return oTable[str(i)][sKey]					
+			except Exception as e:
+				i = i+1
+				continue						
+			i = i+1
+		return {}
 
 	def symbolExists(self, sKey):
+		i = 1
+		oTable = self.getTable()		
+		while (i <= int(self.getCommand())):						
+			try:								
+				if (not oTable[str(i)][sKey]):										
+					return True
+			except Exception as e:
+				i = i+1
+				continue						
+			i = i+1
+		return False
+
+	def getCurrentBlock(self):
+		i = int(self.getCommand())
+		oTable = self.getTable()		
+		while (i >= 1):						
+			try:												
+				if (not oTable[str(i)]['FOR']):										
+					return 'FOR'+str(i)
+			except Exception as e:
+				i = i-1
+				continue						
+			i = i-1			
+		return 'main'
+
+	def setTableBlock(self, sType):
+		oObj = {sType: {}}
+		#print(oObj)
+		self.setTable(oObj)
+
+	def setTableVar(self, sVarName, oObjVar):
+		oBlock = {'BLOCK': self.getCurrentBlock()}
+		oJson = self.objMerge(oObjVar, oBlock)		
+		oJsonVar = {sVarName: oJson}
+		self.setTable(oJsonVar)
+		return True;
+
+	def getCommand(self):
 		try:
-			self.getTable()[sKey]
-			return True
+			return self.getTable()['COMMAND']
 		except Exception as e:
-			return False
+			self.incrementCommand(1)
+			return self.getCommand()
+
+	def incrementCommand(self, iCommand = None):		
+		
+		if (not iCommand):
+			iCommand = int(self.getCommand()) + 1
+
+		oJsonAllTable = self.getTable()
+		oJsonSave = self.objMerge(oJsonAllTable, {'COMMAND': iCommand})
+		sJsonSave = json.dumps(oJsonSave)		
+		self.saveTableFile(sJsonSave)
 
 	def setTable(self, oObj):
-		oJson = self.getTable()	
+		self.incrementCommand()			
+		oJson = self.getSymbol(self.getCommand())
 		oJson = self.objMerge(oJson, oObj)
-		sJsonSave = json.dumps(oJson)		
+		oJsonLine = {str(self.getCommand()): oJson}
+		oJsonAllTable = self.getTable()
+		oJsonSave = self.objMerge(oJsonAllTable, oJsonLine)
+		sJsonSave = json.dumps(oJsonSave)
+		self.saveTableFile(sJsonSave)
+
+	def saveTableFile(self, sJson):
 		oArquivo = open('table.ttop', 'w')
-		oArquivo.write(sJsonSave)
+		oArquivo.write(sJson)
 		oArquivo.close()
 
 	def objMerge(self, obj, add_obj):		

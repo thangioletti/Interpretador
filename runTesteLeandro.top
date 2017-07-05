@@ -1,5 +1,8 @@
 PROGRAM pProgram       
     FUNCTION fTeste(VAR iInt)    	
+        FOR (VAR iInt := 0; iI < 10; iInt := iInt + 1)
+        	VAR iK;
+        END
         VAR iTexto;
         PRINT(iTexto);
     END

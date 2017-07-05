@@ -1,3 +1,4 @@
+from util import Util
 # WHILE e FOR
 #
 class Repeticao:
@@ -9,6 +10,7 @@ class Repeticao:
         self.explog = explog
         self.expreg2 = expreg2
         self.id2 = id2
+        self.tabela()
 
     def __str__(self):
         aux = "<REPETICAO> \n"
@@ -50,3 +52,7 @@ class Repeticao:
 
     def __repr__(self):
         return self.__str__()
+
+    def tabela(self):
+        util = Util()
+        util.setTableBlock('FOR')
