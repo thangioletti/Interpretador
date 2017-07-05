@@ -4,3 +4,4 @@ parsetab.py
 __pycache__/*
 .vscode/*
 classes/__pycache__/*
+*.stop
