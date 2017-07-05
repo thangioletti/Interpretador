@@ -1,14 +1,15 @@
+from util import Util
 class Id:
 
-    def __init__(self, value=None):
-        self.value = value
+    def __init__(self, name=None):
+        self.name = name
         self.type = self.setType()        
 
     def __str__(self):
         aux = "<ID> \n"
 
-        if self.value:
-            aux += self.value + "\n"
+        if self.name:
+            aux += self.name + "\n"
         
         aux += "</ID> \n"
         return aux
@@ -24,11 +25,29 @@ class Id:
             'f': float,
             'd': float,
             'o': object
-        }[self.value[0]]
+        }[self.name[0]]
         
-    def getValue(self):
-        return self.value
+    def getName(self):
+        return self.name
 
     def getType(self):
         return self.type
+
+    def getValue(self):
+        util = Util()
+        value = util.getSymbol("VAR"+self.name)
+
+        if value:
+            return value
+        else:
+            return self.getDefaultValue()
+
+    def getDefaultValue(self):
+        return {
+            int : 0,
+            str : '',
+            bool : False,
+            float : 0.0,
+            object : None
+        }[self.type]
 

@@ -21,5 +21,5 @@ class Declaracao:
 
     def tabela(self):
         util = Util()
-        oJsonVar = {'VAR'+(self.id.getValue()): {}}        
+        oJsonVar = {'VAR'+(self.id.getName()): {}}        
         util.setTable(oJsonVar)

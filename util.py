@@ -17,7 +17,6 @@ class Util:
 		return self.getFileContent('sintatico.stop')		
 
 	def getSemanticFileContent(self):
-
 		if (os.path.isfile('semantico.stop')):
 			return self.getFileContent('semantico.stop')
 		else:
@@ -31,14 +30,20 @@ class Util:
 
 		return json.loads(sJson)			
 
-	def getSimble(self, sKey):
+	def getSymbol(self, sKey):
 		try:
 			return self.getTable()[sKey]
 		except Exception as e:
 			return False
 
-	def setTable(self, oObj):
+	def symbolExists(self, sKey):
+		try:
+			self.getTable()[sKey]
+			return True
+		except Exception as e:
+			return False
 
+	def setTable(self, oObj):
 		oJson = self.getTable()	
 		oJson = self.objMerge(oJson, oObj)
 		sJsonSave = json.dumps(oJson)		

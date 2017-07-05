@@ -41,10 +41,13 @@ class Factor:
         util = Util()
 
         if self.id:
-            if self.id.getType() == str:
-                util.setSemanticFile('<FACTOR> Não é possível definir variável do tipo STRING como FACTOR </FACTOR>')
-            elif self.id.getType() == bool:
-                util.setSemanticFile('<FACTOR> Não é possível definir variável do tipo BOOLEAN como FACTOR </FACTOR>')
-            elif self.id.getType() == object:
-                util.setSemanticFile('<FACTOR> Não é possível definir variável do tipo OBJECT como FACTOR </FACTOR>')
+            if not util.symbolExists("VAR"+self.id.getName()):
+                util.setSemanticFile('<FACTOR> Variável ' + str(self.id.getName()) + ' não foi declarada </FACTOR>')
+            else:
+                if self.id.getType() == str:
+                    util.setSemanticFile('<FACTOR> Não é possível definir variável do tipo STRING como FACTOR </FACTOR>')
+                elif self.id.getType() == bool:
+                    util.setSemanticFile('<FACTOR> Não é possível definir variável do tipo BOOLEAN como FACTOR </FACTOR>')
+                elif self.id.getType() == object:
+                    util.setSemanticFile('<FACTOR> Não é possível definir variável do tipo OBJECT como FACTOR </FACTOR>')
         

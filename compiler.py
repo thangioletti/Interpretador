@@ -358,12 +358,12 @@ class Compiler:
 
         def p_invocacao_id(p):
             'invocacao : ID LPAREN ID RPAREN PONTOEVIRGULA'
-            pilha.empilha(Invocacao.Invocacao(p[1], Id.Id(p[3])))
+            pilha.empilha(Invocacao.Invocacao(Id.Id(p[1]), Id.Id(p[3])))
 
         def p_invocacao_parametrosInvocacao(p):
             'invocacao : ID LPAREN parametrosInvocacao RPAREN PONTOEVIRGULA'
             objetoParametrosInvocacao = pilha.desempilha()
-            pilha.empilha(Invocacao.Invocacao(p[1], objetoParametrosInvocacao))    
+            pilha.empilha(Invocacao.Invocacao(Id.Id(p[1]), objetoParametrosInvocacao))    
 
         def p_invocacao(p):
             'invocacao : ID LPAREN RPAREN PONTOEVIRGULA'
@@ -372,7 +372,7 @@ class Compiler:
         def p_parametros_invocacao(p):
             'parametrosInvocacao : parametrosInvocacao VIRGULA ID'
             objetoParametrosInvocacao = pilha.desempilha()
-            pilha.empilha(ParametrosInvocacao.ParametrosInvocacao(objetoParametro, p[3]))
+            pilha.empilha(ParametrosInvocacao.ParametrosInvocacao(objetoParametro, Id.Id(p[3])))
         
         def p_parametro_invocacao(p):
             'parametrosInvocacao : ID VIRGULA ID'
@@ -388,7 +388,7 @@ class Compiler:
 
         def p_escrever_id(p):
             'escrever : PRINT LPAREN ID RPAREN PONTOEVIRGULA'
-            pilha.empilha(Escrever.Escrever(None, p[3]))
+            pilha.empilha(Escrever.Escrever(None, Id.Id(p[3])))
 
         def p_error(p):
             print("Syntax error in input! %s" % p)

@@ -1,6 +1,6 @@
 PROGRAM pProgram       
     FUNCTION fTeste(VAR iInt)    	
-        VAR bInt;
-        iInt := 10;
+        VAR iTexto;
+        PRINT(iTexto);
     END
 END
