@@ -1,5 +1,6 @@
 PROGRAM pProgram       
     FUNCTION fTeste(VAR iInt)    	
-        bInt := "TESTE";
+        VAR bInt;
+        iInt := 10;
     END
 END

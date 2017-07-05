@@ -35,15 +35,18 @@ class Atribuicao:
     def semantico(self):        
         util = Util()
 
+        if not util.getSimble('VAR'+self.id.getValue()):
+            util.setSemanticFile('<ATRIBUICAO>A variavel ' + str(self.id.getValue()) + ' não foi previamente declarada </ATRIBUICAO>')
+            return
         if self.expreg:
             if (not isinstance(self.expreg.getValue() , self.id.getType())):
-                util.setSemanticFile('<ATRIBUICAO>A variavel ' + str(self.id.getValue()) + ' espera um valor '+util.getLabelTypes(str(self.id.getType()))+' mas o recebido foi '+util.getLabelTypes(str(type(self.expreg.getValue())))+' </ATRIBUICAO>');
-                return;
+                util.setSemanticFile('<ATRIBUICAO>A variavel ' + str(self.id.getValue()) + ' espera um valor '+util.getLabelTypes(str(self.id.getType()))+' mas o recebido foi '+util.getLabelTypes(str(type(self.expreg.getValue())))+' </ATRIBUICAO>')
+                return
         elif self.explog:
             if (not type(self.explog.getValue()) == self.id.getType()):
-                util.setSemanticFile('<ATRIBUICAO>A variavel ' + str(self.id.getValue()) + ' espera um valor '+util.getLabelTypes(str(self.id.getType()))+' mas o recebido foi '+util.getLabelTypes(str(type(self.expreg.getValue())))+' </ATRIBUICAO>');
-                return;
+                util.setSemanticFile('<ATRIBUICAO>A variavel ' + str(self.id.getValue()) + ' espera um valor '+util.getLabelTypes(str(self.id.getType()))+' mas o recebido foi '+util.getLabelTypes(str(type(self.expreg.getValue())))+' </ATRIBUICAO>')
+                return
         else:
             if (not isinstance(self.string, self.id.getType())):                                
                 util.setSemanticFile('<ATRIBUICAO>A variavel '+ str(self.id.getValue()) + ' espera um valor '+ util.getLabelTypes(str(self.id.getType()))+' mas o recebido foi ' +util.getLabelTypes(str(type(self.string)))+' </ATRIBUICAO>')
-                return;
+                return    
