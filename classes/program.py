@@ -1,15 +1,15 @@
 from util import Util
 class Program:
 
-    def __init__(self, function=None):
-        self.function = function
+    def __init__(self, bloco=None):
+        self.bloco = bloco
         self.semantico()
 
     def __str__(self):
         aux = "<PROGRAM> \n"
         
-        if self.function:
-            aux += self.function.__repr__()
+        if self.bloco:
+            aux += self.bloco.__repr__()
             
         aux += "</PROGRAM> \n"
         return aux
@@ -18,8 +18,8 @@ class Program:
         return self.__str__()
 
     def semantico(self):
-        if self.function:
-            if not self.function.semantico():
+        if self.bloco:
+            if not self.bloco.semantico():
                 return False
 
         return True

@@ -142,21 +142,9 @@ class Compiler:
         pilha = Pilha.Pilha()
 
         def p_program(p):
-            'program : PROGRAM ID function END'
+            'program : PROGRAM ID bloco END'
             objetoFunction = pilha.desempilha()
             pilha.empilha(Program.Program(objetoFunction))
-
-        def p_function_function(p):
-            'function : function function'
-            objetoFunction1 = pilha.desempilha()
-            objetoFunction2 = pilha.desempilha()
-            pilha.empilha(Function.Function(objetoFunction2, objetoFunction1))
-
-        def p_function(p):
-            'function : FUNCTION ID LPAREN parametros RPAREN bloco END'
-            objetoBloco = pilha.desempilha()
-            objetoParametros = pilha.desempilha()
-            pilha.empilha(Function.Function(objetoParametros, objetoBloco))
 
         def p_bloco(p):
             'bloco : comando'

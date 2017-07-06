@@ -1,9 +1,7 @@
 PROGRAM pProgram       
-    FUNCTION fTeste(VAR iInt)
-        IF (1 > 1)
-        	VAR iK;
-            iK := 1 + 2;
-            PRINT(iK);
-        END
+    IF (1 > 1)
+        VAR iK;
+        iK := 1 + 2;
+        PRINT(iK);
     END
 END
