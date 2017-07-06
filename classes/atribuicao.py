@@ -41,13 +41,23 @@ class Atribuicao:
                 if self.expreg.semantico():
                     if (not isinstance(self.expreg.getValue() , self.id.getType())):
                         util.setSemanticFile('<ATRIBUICAO>A variavel ' + str(self.id.getName()) + ' espera um valor '+util.getLabelTypes(str(self.id.getType()))+' mas o recebido foi '+util.getLabelTypes(str(type(self.expreg.getValue())))+' </ATRIBUICAO>')
+                    else:
+                        oJson = {'VALOR': self.expreg.getValue()}
+                        print(oJson)
+                        util.setTableVar('VAR'+str(self.id.getName()), oJson)#GRAVA NA TABELA
             elif self.explog: 
                 if self.explog.semantico():
                     if (not type(self.explog.getValue()) == self.id.getType()):
                         util.setSemanticFile('<ATRIBUICAO>A variavel ' + str(self.id.getName()) + ' espera um valor '+util.getLabelTypes(str(self.id.getType()))+' mas o recebido foi '+util.getLabelTypes(str(type(self.expreg.getValue())))+' </ATRIBUICAO>')
+                    else:
+                        oJson = {'VALOR': self.explog.getValue()}
+                        util.setTableVar('VAR'+str(self.id.getName()), oJson)#GRAVA NA TABELA
             else:
                 if (not isinstance(self.string, self.id.getType())):                                
                     util.setSemanticFile('<ATRIBUICAO>A variavel '+ str(self.id.getName()) + ' espera um valor '+ util.getLabelTypes(str(self.id.getType()))+' mas o recebido foi ' +util.getLabelTypes(str(type(self.string)))+' </ATRIBUICAO>')
-
+                else:
+                    oJson = {'VALOR': str(self.string).replace('"','')}
+                    util.setTableVar('VAR'+str(self.id.getName()), oJson)#GRAVA NA TABELA
+    
     def getValue(self):
         return

@@ -36,28 +36,29 @@ class Util:
 		return json.loads(sJson)			
 
 	def getSymbol(self, sKey):
-		i = 1
+		i = int(self.getCommand())
 		oTable = self.getTable()		
-		while (i <= int(self.getCommand())):						
+		while (i >= 1):						
 			try:								
 				return oTable[str(i)][sKey]					
 			except Exception as e:
-				i = i+1
+				i = i-1
 				continue						
-			i = i+1
+			i = i-1
 		return {}
 
-	def symbolExists(self, sKey):
-		i = 1
+	def symbolExists(self, sKey):		
+		i = int(self.getCommand())
 		oTable = self.getTable()		
 		while (i <= int(self.getCommand())):						
 			try:								
 				if (oTable[str(i)][sKey]):										
+		
 					return True
 			except Exception as e:
-				i = i+1
+				i = i-1
 				continue						
-			i = i+1
+			i = i-1
 		return False
 
 	def getCurrentBlock(self):
@@ -81,7 +82,7 @@ class Util:
 	def setTableVar(self, sVarName, oObjVar):
 		oBlock = {'BLOCK': self.getCurrentBlock()}
 		oJson = self.objMerge(oObjVar, oBlock)		
-		oJsonVar = {sVarName: oJson}
+		oJsonVar = {sVarName: oJson}		
 		self.setTable(oJsonVar)
 		return True
 
@@ -123,12 +124,12 @@ class Util:
 		return obj
 
 	def setSemanticFile(self, sText):
-		oArquivoSemantico = open('semantico.stop', 'w')		
-		oArquivoSemantico.write(str(sText))
-		oArquivoSemantico.close()
+		if (not os.path.isfile('semantico.stop')):
+			oArquivoSemantico = open('semantico.stop', 'w')		
+			oArquivoSemantico.write(str(sText))
+			oArquivoSemantico.close()
 
 	def getFileContent(self, sFileDir):
-
 		oArquivo = open(sFileDir)
 		sData = ''
 		with oArquivo as oInfo:

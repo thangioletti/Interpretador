@@ -14,4 +14,4 @@ compiler = Compiler(sData)
 #print(util.getSintaticFileContent())
 
 #SEMANTICO
-print(util.getSemanticFileContent())
+#print(util.getSemanticFileContent())

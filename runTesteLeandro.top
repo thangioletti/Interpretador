@@ -1,7 +1,7 @@
-PROGRAM pProgram       
+PROGRAM pProgram
     IF (1 > 0)
         VAR iK;
         iK := 1 + 2;
-        PRINT("1");
+        PRINT(iK);
     END
 END
