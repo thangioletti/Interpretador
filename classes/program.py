@@ -4,6 +4,7 @@ class Program:
     def __init__(self, bloco=None):
         self.bloco = bloco
         self.semantico()
+        self.getValue()
 
     def __str__(self):
         aux = "<PROGRAM> \n"
@@ -23,4 +24,8 @@ class Program:
                 return False
 
         return True
+
+    def getValue(self):
+        if self.bloco:
+            self.bloco.getValue()
     

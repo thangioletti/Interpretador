@@ -24,3 +24,7 @@ class Bloco:
                 return False
 
         return True
+
+    def getValue(self):
+        if self.comando:
+            self.comando.getValue()

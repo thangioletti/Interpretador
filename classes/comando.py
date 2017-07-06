@@ -32,3 +32,10 @@ class Comando:
                 return False
         
         return True
+
+    def getValue(self):
+        if self.comando1:
+            self.comando1.getValue()
+        
+        if self.comando2:
+            self.comando2.getValue()

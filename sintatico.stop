@@ -16,7 +16,6 @@ IF
 <EXPREG> 
 <TERM> 
 <FACTOR> 
-1
 </FACTOR> 
 </TERM> 
 </EXPREG> 
@@ -62,9 +61,7 @@ iK
 <ESCREVER> 
 PRINT 
 ( 
-<ID> 
-iK
-</ID> 
+"1"
 )
 ; 
 </ESCREVER> 

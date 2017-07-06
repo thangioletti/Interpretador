@@ -27,3 +27,6 @@ class Declaracao:
             oJsonVar = {}
             sVarName = 'VAR'+(self.id.getName())
             util.setTableVar(sVarName, oJsonVar)
+    
+    def getValue(self):
+        return

@@ -48,3 +48,6 @@ class Atribuicao:
             else:
                 if (not isinstance(self.string, self.id.getType())):                                
                     util.setSemanticFile('<ATRIBUICAO>A variavel '+ str(self.id.getName()) + ' espera um valor '+ util.getLabelTypes(str(self.id.getType()))+' mas o recebido foi ' +util.getLabelTypes(str(type(self.string)))+' </ATRIBUICAO>')
+
+    def getValue(self):
+        return

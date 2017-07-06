@@ -42,3 +42,12 @@ class Condicao:
                 return False
 
         return True
+
+    def getValue(self):
+        if self.explog:
+            if self.explog.getValue():
+                if self.bloco:
+                    self.bloco.getValue()
+            else:
+                if self.blocoElse:
+                    self.blocoElse.getValue()

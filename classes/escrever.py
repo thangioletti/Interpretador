@@ -32,3 +32,9 @@ class Escrever:
                     return False
         return True
                     
+    def getValue(self):
+        if self.id:
+            print(str(self.id.getValue()))
+        elif self.texto:
+            print(str(self.texto).replace('"',''))
+        
