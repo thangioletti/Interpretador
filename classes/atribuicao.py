@@ -43,7 +43,6 @@ class Atribuicao:
                         util.setSemanticFile('<ATRIBUICAO>A variavel ' + str(self.id.getName()) + ' espera um valor '+util.getLabelTypes(str(self.id.getType()))+' mas o recebido foi '+util.getLabelTypes(str(type(self.expreg.getValue())))+' </ATRIBUICAO>')
                     else:
                         oJson = {'VALOR': self.expreg.getValue()}
-                        print(oJson)
                         util.setTableVar('VAR'+str(self.id.getName()), oJson)#GRAVA NA TABELA
             elif self.explog: 
                 if self.explog.semantico():

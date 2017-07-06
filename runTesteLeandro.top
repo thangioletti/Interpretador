@@ -1,7 +1,5 @@
 PROGRAM pProgram
-    IF (1 > 0)
-        VAR iK;
-        iK := 1 + 2;
-        PRINT(iK);
+    FOR (VAR iI := 0; iI < 3; iI := iI + 1)
+        PRINT("Teste");
     END
 END
