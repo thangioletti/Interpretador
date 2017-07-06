@@ -3,7 +3,6 @@ class Bloco:
 
     def __init__(self, comando=None):
         self.comando = comando
-        self.semantico()
 
     def __str__(self):
         aux = "<BLOCO> \n"

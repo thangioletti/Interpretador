@@ -1,7 +1,9 @@
+from util import Util
 class Program:
 
     def __init__(self, function=None):
         self.function = function
+        self.semantico()
 
     def __str__(self):
         aux = "<PROGRAM> \n"
@@ -16,4 +18,9 @@ class Program:
         return self.__str__()
 
     def semantico(self):
-        return ''
+        if self.function:
+            if not self.function.semantico():
+                return False
+
+        return True
+    
