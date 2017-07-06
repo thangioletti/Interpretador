@@ -48,3 +48,15 @@ class Atribuicao:
             else:
                 if (not isinstance(self.string, self.id.getType())):                                
                     util.setSemanticFile('<ATRIBUICAO>A variavel '+ str(self.id.getName()) + ' espera um valor '+ util.getLabelTypes(str(self.id.getType()))+' mas o recebido foi ' +util.getLabelTypes(str(type(self.string)))+' </ATRIBUICAO>')
+
+        #AQUI LEANDRO
+        sValor = '0' #aqui vai o valor da variavel
+        #MONTA UM JSON CASO PASSOU NAS VERIFICAÇÕES DO SEMANTICO
+        oJson = {'VALOR': sValor}
+        #GRAVA NA TABELA
+        util.setTableVar('VAR'+str(self.id.getName()), oJson)
+
+        #PRA PEGAR O VALOR 
+        oJson = util.getSymbol('VAR'+str(self.id.getName()))
+        sValor = oJson['VALOR']
+        #print(sValor)
