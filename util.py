@@ -52,7 +52,7 @@ class Util:
 		oTable = self.getTable()		
 		while (i <= int(self.getCommand())):						
 			try:								
-				if (not oTable[str(i)][sKey]):										
+				if (oTable[str(i)][sKey]):										
 					return True
 			except Exception as e:
 				i = i+1
@@ -83,7 +83,7 @@ class Util:
 		oJson = self.objMerge(oObjVar, oBlock)		
 		oJsonVar = {sVarName: oJson}
 		self.setTable(oJsonVar)
-		return True;
+		return True
 
 	def getCommand(self):
 		try:

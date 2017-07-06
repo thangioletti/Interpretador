@@ -28,7 +28,6 @@ class Expreg:
         return self.__str__()
 
     def getValue(self):
-        #return self.term.getFactor().getNumber()
         if self.operacao:
             if self.operacao == '+':
                 return self.expreg.getValue() + self.term.getValue()
@@ -36,3 +35,14 @@ class Expreg:
                 return self.expreg.getValue() - self.term.getValue()
         elif self.term:
             return self.term.getValue()
+
+    def semantico(self):
+        if self.expreg:
+            if not self.expreg.semantico():
+                return False
+
+        if self.term:
+            if not self.term.semantico():
+                return False
+
+        return True

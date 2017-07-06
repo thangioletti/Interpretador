@@ -6,8 +6,7 @@ class Atribuicao:
         self.expreg = expreg
         self.id = id
         self.string = string
-        self.explog = explog     
-        self.semantico()   
+        self.explog = explog
 
     def __str__(self):
         aux = "<ATRIBUICAO> \n"
@@ -38,12 +37,14 @@ class Atribuicao:
         if not util.symbolExists('VAR'+str(self.id.getName())):
             util.setSemanticFile('<ATRIBUICAO>A variavel ' + str(self.id.getName()) + ' não foi previamente declarada </ATRIBUICAO>')
         else:
-            if self.expreg:
-                if (not isinstance(self.expreg.getValue() , self.id.getType())):
-                    util.setSemanticFile('<ATRIBUICAO>A variavel ' + str(self.id.getName()) + ' espera um valor '+util.getLabelTypes(str(self.id.getType()))+' mas o recebido foi '+util.getLabelTypes(str(type(self.expreg.getValue())))+' </ATRIBUICAO>')
-            elif self.explog:
-                if (not type(self.explog.getValue()) == self.id.getType()):
-                    util.setSemanticFile('<ATRIBUICAO>A variavel ' + str(self.id.getName()) + ' espera um valor '+util.getLabelTypes(str(self.id.getType()))+' mas o recebido foi '+util.getLabelTypes(str(type(self.expreg.getValue())))+' </ATRIBUICAO>')
+            if self.expreg: 
+                if self.expreg.semantico():
+                    if (not isinstance(self.expreg.getValue() , self.id.getType())):
+                        util.setSemanticFile('<ATRIBUICAO>A variavel ' + str(self.id.getName()) + ' espera um valor '+util.getLabelTypes(str(self.id.getType()))+' mas o recebido foi '+util.getLabelTypes(str(type(self.expreg.getValue())))+' </ATRIBUICAO>')
+            elif self.explog: 
+                if self.explog.semantico():
+                    if (not type(self.explog.getValue()) == self.id.getType()):
+                        util.setSemanticFile('<ATRIBUICAO>A variavel ' + str(self.id.getName()) + ' espera um valor '+util.getLabelTypes(str(self.id.getType()))+' mas o recebido foi '+util.getLabelTypes(str(type(self.expreg.getValue())))+' </ATRIBUICAO>')
             else:
                 if (not isinstance(self.string, self.id.getType())):                                
                     util.setSemanticFile('<ATRIBUICAO>A variavel '+ str(self.id.getName()) + ' espera um valor '+ util.getLabelTypes(str(self.id.getType()))+' mas o recebido foi ' +util.getLabelTypes(str(type(self.string)))+' </ATRIBUICAO>')

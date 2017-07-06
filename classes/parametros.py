@@ -1,3 +1,4 @@
+from util import Util
 class Parametros:
 
     def __init__(self, parametro=None, parametros=None):
@@ -19,3 +20,11 @@ class Parametros:
 
     def __repr__(self):
         return self.__str__()
+
+    def semantico(self):
+        util = Util()
+
+        #if self.parametros:
+            
+
+        return True

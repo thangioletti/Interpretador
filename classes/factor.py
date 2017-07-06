@@ -7,7 +7,6 @@ class Factor:
         self.id=id
         self.number=number
         self.expression=expression
-        self.semantico()
 
     def __str__(self):
         aux = "<FACTOR> \n"
@@ -32,8 +31,7 @@ class Factor:
         if self.expression:
             return self.expression.getValue()
         elif self.id:
-            return 0
-            #return self.id.getValue()
+            return self.id.getValue()
         else:
             return self.number
 
@@ -43,11 +41,20 @@ class Factor:
         if self.id:
             if not util.symbolExists("VAR"+self.id.getName()):
                 util.setSemanticFile('<FACTOR> Variável ' + str(self.id.getName()) + ' não foi declarada </FACTOR>')
+                return False
             else:
                 if self.id.getType() == str:
                     util.setSemanticFile('<FACTOR> Não é possível definir variável do tipo STRING como FACTOR </FACTOR>')
+                    return False
                 elif self.id.getType() == bool:
                     util.setSemanticFile('<FACTOR> Não é possível definir variável do tipo BOOLEAN como FACTOR </FACTOR>')
+                    return False
                 elif self.id.getType() == object:
                     util.setSemanticFile('<FACTOR> Não é possível definir variável do tipo OBJECT como FACTOR </FACTOR>')
-        
+                    return False
+
+        if self.expression:
+            if not self.expression.semantico():
+                return False
+
+        return True

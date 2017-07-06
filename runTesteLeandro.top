@@ -1,9 +1,9 @@
 PROGRAM pProgram       
-    FUNCTION fTeste(VAR iInt)    	
-        FOR (VAR iInt := 0; iI < 10; iInt := iInt + 1)
+    FUNCTION fTeste(VAR iInt)
+        IF (1 > 1)
         	VAR iK;
+            iK := 1 + 2;
+            PRINT(iK);
         END
-        VAR iTexto;
-        PRINT(iTexto);
     END
 END

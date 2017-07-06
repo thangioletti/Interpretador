@@ -1,3 +1,4 @@
+from util import Util
 class Condicao:
 
     def __init__(self, explog=None, bloco=None, blocoElse=None):
@@ -26,3 +27,18 @@ class Condicao:
 
     def __repr__(self):
         return self.__str__()
+
+    def semantico(self):
+        if self.explog:
+            if not self.explog.semantico():
+                return False
+
+        if self.bloco:
+            if not self.bloco.semantico():
+                return False
+        
+        if self.blocoElse:
+            if not self.blocoElse.semantico():
+                return False
+
+        return True

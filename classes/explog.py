@@ -48,3 +48,13 @@ class Explog:
             else:
                 return False
               
+    def semantico(self):
+        if self.expreg1:
+            if not self.expreg1.semantico():
+                return False
+        
+        if self.expreg2:
+            if not self.expreg2.semantico():
+                return False
+
+        return True

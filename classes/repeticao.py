@@ -10,7 +10,6 @@ class Repeticao:
         self.explog = explog
         self.expreg2 = expreg2
         self.id2 = id2
-        self.tabela()
 
     def __str__(self):
         aux = "<REPETICAO> \n"
@@ -53,6 +52,17 @@ class Repeticao:
     def __repr__(self):
         return self.__str__()
 
-    def tabela(self):
+    def semantico(self):
         util = Util()
-        util.setTableBlock('FOR')
+
+        if self.id1:
+            if util.symbolExists(self.id1.getName()):
+                util.setSemanticFile('<REPETICAO>Já existe uma variável com o nome: ' + self.id1.getName() + '</REPETICAO>')
+            else:
+                if self.id2:
+                    if self.id2.getName() != self.id1.getName():
+                        util.setSemanticFile('<REPETICAO>Variável que recece atribuição(' + self.id2.getName() + ' é diferente de variável declarada inicialmente (' + self.id1.getName() + ')</REPETICAO>')
+                    else:
+                        oJsonVar = {}
+                        sVarName = 'VAR'+(self.id1.getName())
+                        util.setTableVar(sVarName, oJsonVar)

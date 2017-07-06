@@ -4,7 +4,6 @@ class Declaracao:
 
     def __init__(self, id=None):
         self.id = id
-        self.tabela()
 
     def __str__(self):
         aux = "<DECLARACAO> \n VAR \n"
@@ -19,8 +18,12 @@ class Declaracao:
     def __repr__(self):
         return self.__str__()
 
-    def tabela(self):
+    def semantico(self):
         util = Util()
-        oJsonVar = {}
-        sVarName = 'VAR'+(self.id.getName())
-        util.setTableVar(sVarName, oJsonVar)
+
+        if util.symbolExists(self.id.getName()):
+            util.setSemanticFile('<DECLARACAO>Já existe uma variável com o nome: ' + self.id.getName() + '</DECLARACAO>')
+        else:
+            oJsonVar = {}
+            sVarName = 'VAR'+(self.id.getName())
+            util.setTableVar(sVarName, oJsonVar)
