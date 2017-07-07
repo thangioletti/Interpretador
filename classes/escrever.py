@@ -33,8 +33,10 @@ class Escrever:
         return True
                     
     def getValue(self):
+        util = Util();
+
         if self.id:
-            print(str(self.id.getValue()))
+            util.setConsoleFile(str(self.id.getValue()))
         elif self.texto:
-            print(str(self.texto).replace('"',''))
+            util.setConsoleFile(str(self.texto).replace('"',''))
         

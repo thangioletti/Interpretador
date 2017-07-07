@@ -7,6 +7,10 @@ class Util:
 		if (os.path.isfile('semantico.stop')):
 			os.remove('semantico.stop')
 
+	def unlinkConsole(self):		
+		if (os.path.isfile('console.stop')):
+			os.remove('console.stop')
+
 	def getDefaultCode(self):		
 		return self.getFileContent('run.top')
 
@@ -15,6 +19,9 @@ class Util:
 
 	def getSintaticFileContent(self):		
 		return self.getFileContent('sintatico.stop')		
+
+	def getConsoleFileContent(self):		
+		return self.getFileContent('console.stop')		
 
 	def getSemanticFileContent(self):
 		if (os.path.isfile('semantico.stop')):
@@ -128,6 +135,17 @@ class Util:
 			oArquivoSemantico = open('semantico.stop', 'w')		
 			oArquivoSemantico.write(str(sText))
 			oArquivoSemantico.close()
+
+	def setConsoleFile(self, sText):		
+		if (os.path.isfile('semantico.stop')):
+			sData = self.getFileContent('console.stop')
+		else:
+			sData = ''
+
+		sText = sData+'\n'+sText		
+		oArquivo = open('console.stop', 'w')		
+		oArquivo.write(str(sText))
+		oArquivo.close()
 
 	def getFileContent(self, sFileDir):
 		oArquivo = open(sFileDir)

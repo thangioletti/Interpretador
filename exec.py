@@ -186,6 +186,9 @@ class Application:
 		self.sin.insert(END, self.util.getSintaticFileContent())
 		self.sem.delete(1.0, END)
 		self.sem.insert(END, self.util.getSemanticFileContent())		
+		self.newCode.delete(1.0, END)
+		self.newCode.insert(END, self.util.getConsoleFileContent())		
+		
 	   
 root = Tk()
 Application(root)

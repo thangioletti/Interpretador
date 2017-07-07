@@ -8,7 +8,8 @@ class Compiler:
         util = Util()
         util.unlinkSemantic()
         util.unlinkTable()
-
+        util.unlinkConsole()
+        
         # List of token names.   This is always required
         reserved = {
            'VAR' : 'VAR',

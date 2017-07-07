@@ -1,5 +1,5 @@
-PROGRAM pProgram       
-    FUNCTION fTeste(VAR iInt)    	
-        bInt := "TESTE";
+PROGRAM pProgram
+    FOR (VAR iI := 0; iI < 3; iI := iI + 1)
+        PRINT("Teste");
     END
 END
