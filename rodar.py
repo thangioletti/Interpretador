@@ -15,3 +15,6 @@ compiler = Compiler(sData)
 
 #SEMANTICO
 #print(util.getSemanticFileContent())
+
+#CONSOLE
+print(util.getConsoleFileContent())
