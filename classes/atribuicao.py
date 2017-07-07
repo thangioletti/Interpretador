@@ -57,6 +57,16 @@ class Atribuicao:
                 else:                    
                     oJson = {'VALOR': str(self.string).replace('"','')}
                     util.setTableVar('VAR'+str(self.id.getName()), oJson)#GRAVA NA TABELA
-        print('OOOII')
+
     def getValue(self):
-        return
+        if self.expreg: 
+            oJson = {'VALOR': self.expreg.getValue()}
+            util.setTableVar('VAR'+str(self.id.getName()), oJson)#GRAVA NA TABELA
+        elif self.explog: 
+            oJson = {'VALOR': self.explog.getValue()}
+            util.setTableVar('VAR'+str(self.id.getName()), oJson)#GRAVA NA TABELA
+        else:
+            oJson = {'VALOR': str(self.string).replace('"','')}
+            util.setTableVar('VAR'+str(self.id.getName()), oJson)#GRAVA NA TABELA
+
+        return True

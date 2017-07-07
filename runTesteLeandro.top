@@ -1,5 +1,6 @@
 PROGRAM pProgram
     FOR (VAR iI := 0; iI < 3; iI := iI + 1)
-        PRINT(iI);
+        VAR sTexto := "TExTE";
+        PRINT(sTexto);
     END
 END
