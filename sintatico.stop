@@ -63,7 +63,9 @@ iI
 <ESCREVER> 
 PRINT 
 ( 
-"Teste"
+<ID> 
+iI
+</ID> 
 )
 ; 
 </ESCREVER> 
