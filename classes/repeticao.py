@@ -9,7 +9,7 @@ class Repeticao:
         self.id1 = id1
         self.explog = explog
         self.expreg2 = expreg2
-        self.id2 = id2
+        self.id2 = id2        
 
     def __str__(self):
         aux = "<REPETICAO> \n"
@@ -88,9 +88,11 @@ class Repeticao:
         return True
 
     def getValue(self):
+        util = Util()
+
         #Enquanto a explog for Verdadeira, executa o bloco de comandos
         while (self.explog.getValue()):
-            self.bloco.getValue()
+            self.bloco.getValue()            
             if self.id1:
-                oJson = {'VALOR': self.expreg2)}
+                oJson = {'VALOR': self.expreg2}
                 util.setTableVar('VAR'+str(self.id1.getName()), oJson)#GRAVA NA TABELA

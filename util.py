@@ -50,7 +50,7 @@ class Util:
 	def symbolExists(self, sKey):		
 		i = int(self.getCommand())
 		oTable = self.getTable()		
-		while (i <= int(self.getCommand())):						
+		while (i >= 1):						
 			try:								
 				if (oTable[str(i)][sKey]):										
 		

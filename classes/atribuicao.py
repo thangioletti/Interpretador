@@ -54,9 +54,9 @@ class Atribuicao:
             else:
                 if (not isinstance(self.string, self.id.getType())):                                
                     util.setSemanticFile('<ATRIBUICAO>A variavel '+ str(self.id.getName()) + ' espera um valor '+ util.getLabelTypes(str(self.id.getType()))+' mas o recebido foi ' +util.getLabelTypes(str(type(self.string)))+' </ATRIBUICAO>')
-                else:
+                else:                    
                     oJson = {'VALOR': str(self.string).replace('"','')}
                     util.setTableVar('VAR'+str(self.id.getName()), oJson)#GRAVA NA TABELA
-    
+        print('OOOII')
     def getValue(self):
         return
