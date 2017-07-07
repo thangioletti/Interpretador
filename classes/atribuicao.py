@@ -59,6 +59,8 @@ class Atribuicao:
                     util.setTableVar('VAR'+str(self.id.getName()), oJson)#GRAVA NA TABELA
 
     def getValue(self):
+        util = Util()
+        
         if self.expreg: 
             oJson = {'VALOR': self.expreg.getValue()}
             util.setTableVar('VAR'+str(self.id.getName()), oJson)#GRAVA NA TABELA

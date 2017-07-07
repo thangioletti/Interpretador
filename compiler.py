@@ -158,11 +158,6 @@ class Compiler:
             objetoComando2 = pilha.desempilha()
             pilha.empilha(Comando.Comando(objetoComando2, objetoComando1))
 
-        def p_comando_invocacao(p):
-            'comando : invocacao'
-            objetoInvocacao = pilha.desempilha()
-            pilha.empilha(Comando.Comando(objetoInvocacao))
-
         def p_comando_declaracao(p):
             'comando : declaracao'
             objetoDeclaracao = pilha.desempilha()
@@ -233,6 +228,10 @@ class Compiler:
         def p_atribuicao_string(p):
             'atribuicao : ID ATRIBUICAO STRING PONTOEVIRGULA'
             pilha.empilha(Atribuicao.Atribuicao(Id.Id(p[1]),None, p[3]))
+
+        def p_declaracao(p):
+            'declaracao : VAR ID PONTOEVIRGULA'
+            pilha.empilha(Declaracao.Declaracao(Id.Id(p[2])))
             
         def p_explog_or(p):
             'explog : explog OR explog'
@@ -327,48 +326,6 @@ class Compiler:
         def p_factor_num(p):
             'factor : NUM'
             pilha.empilha(Factor.Factor(None, p[1], None))
-            #p[0] = Term(None, None, Factor(None, p[1], None))
-
-        def p_parametros(p):
-            'parametros : parametros VIRGULA parametro'
-            objetoParametro = pilha.desempilha()
-            objetoParametros = pilha.desempilha()
-            pilha.empilha(Parametros.Parametros(objetoParametro, objetoParametros))
-
-        def p_parametros_parametro(p):
-            'parametros : parametro'
-            objetoParametro = pilha.desempilha()
-            pilha.empilha(Parametros.Parametros(objetoParametro))
-
-        def p_parametro(p):
-            'parametro : VAR ID'
-            pilha.empilha(Parametro.Parametro(Id.Id(p[2])))
-
-        def p_invocacao_id(p):
-            'invocacao : ID LPAREN ID RPAREN PONTOEVIRGULA'
-            pilha.empilha(Invocacao.Invocacao(Id.Id(p[1]), Id.Id(p[3])))
-
-        def p_invocacao_parametrosInvocacao(p):
-            'invocacao : ID LPAREN parametrosInvocacao RPAREN PONTOEVIRGULA'
-            objetoParametrosInvocacao = pilha.desempilha()
-            pilha.empilha(Invocacao.Invocacao(Id.Id(p[1]), objetoParametrosInvocacao))    
-
-        def p_invocacao(p):
-            'invocacao : ID LPAREN RPAREN PONTOEVIRGULA'
-            pilha.empilha(Invocacao.Invocacao(p[1]))
-
-        def p_parametros_invocacao(p):
-            'parametrosInvocacao : parametrosInvocacao VIRGULA ID'
-            objetoParametrosInvocacao = pilha.desempilha()
-            pilha.empilha(ParametrosInvocacao.ParametrosInvocacao(objetoParametro, Id.Id(p[3])))
-        
-        def p_parametro_invocacao(p):
-            'parametrosInvocacao : ID VIRGULA ID'
-            pilha.empilha(ParametrosInvocacao.ParametrosInvocacao(Id.Id(p[1]), Id.Id(p[3])))
-
-        def p_declaracao(p):
-            'declaracao : VAR ID PONTOEVIRGULA'
-            pilha.empilha(Declaracao.Declaracao(Id.Id(p[2])))
 
         def p_escrever(p):
             'escrever : PRINT LPAREN STRING RPAREN PONTOEVIRGULA'
