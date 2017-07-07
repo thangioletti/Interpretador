@@ -37,7 +37,7 @@ class Id:
         util = Util()
         #PRA PEGAR O VALOR 
         oJson = util.getSymbol('VAR'+str(self.getName()))        
-        value = 0#oJson['VALOR']
+        value = oJson['VALOR']
 
         if value:
             return value

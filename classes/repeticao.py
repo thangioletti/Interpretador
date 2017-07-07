@@ -65,10 +65,9 @@ class Repeticao:
                         util.setSemanticFile('<REPETICAO>Variável que recece atribuição(' + self.id2.getName() + ' é diferente de variável declarada inicialmente (' + self.id1.getName() + ')</REPETICAO>')
                         return False
                     else:
-                        oJsonVar = {}
-                        sVarName = 'VAR'+(self.id1.getName())
-                        util.setTableVar(sVarName, oJsonVar)     
-                
+                        oJson = {'VALOR': self.expreg1.getValue()}
+                        util.setTableVar('VAR'+str(self.id1.getName()), oJson)#GRAVA NA TABELA
+                        
         if self.explog:
             if not self.explog.semantico():
                 return False
@@ -94,5 +93,5 @@ class Repeticao:
         while (self.explog.getValue()):
             self.bloco.getValue()            
             if self.id1:
-                oJson = {'VALOR': self.expreg2}
+                oJson = {'VALOR': self.expreg2.getValue()}
                 util.setTableVar('VAR'+str(self.id1.getName()), oJson)#GRAVA NA TABELA
