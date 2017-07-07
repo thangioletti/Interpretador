@@ -137,12 +137,12 @@ class Util:
 			oArquivoSemantico.close()
 
 	def setConsoleFile(self, sText):		
-		if (os.path.isfile('semantico.stop')):
+		if (os.path.isfile('console.stop')):
 			sData = self.getFileContent('console.stop')
 		else:
 			sData = ''
 
-		sText = sData+'\n'+sText		
+		sText = sData+'\n'+sText			
 		oArquivo = open('console.stop', 'w')		
 		oArquivo.write(str(sText))
 		oArquivo.close()
