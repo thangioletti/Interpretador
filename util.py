@@ -20,8 +20,11 @@ class Util:
 	def getSintaticFileContent(self):		
 		return self.getFileContent('sintatico.stop')		
 
-	def getConsoleFileContent(self):		
-		return self.getFileContent('console.stop')		
+	def getConsoleFileContent(self):	
+		if (os.path.isfile('console.stop')):	
+			return self.getFileContent('console.stop')		
+		else:
+			return ''
 
 	def getSemanticFileContent(self):
 		if (os.path.isfile('semantico.stop')):
